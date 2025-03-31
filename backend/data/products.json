@@ -1,0 +1,565 @@
+[
+    {
+        "id": 1,
+        "name": "Bread #1",
+        "category": "Bread",
+        "price": 97.52,
+        "image": "/products/bread_en_1.jpg",
+        "description": "This is a delicious bread in en.",
+        "comments": [
+            "My kids love it.",
+            "Highly recommend.",
+            "Best I ever tried.",
+            "Too expensive."
+        ],
+        "rating": 2.1
+    },
+    {
+        "id": 2,
+        "name": "Pan #2",
+        "category": "Pan",
+        "price": 20.9,
+        "image": "/products/bread_es_2.jpg",
+        "description": "This is a delicious bread in es.",
+        "comments": [
+            "Very tasty!",
+            "Fresh and good quality.",
+            "Not bad.",
+            "Too expensive.",
+            "Could be better."
+        ],
+        "rating": 4.7
+    },
+    {
+        "id": 3,
+        "name": "Pane #3",
+        "category": "Pane",
+        "price": 31.92,
+        "image": "/products/bread_it_3.jpg",
+        "description": "This is a delicious bread in it.",
+        "comments": [
+            "Not bad.",
+            "Fresh and good quality."
+        ],
+        "rating": 2.6
+    },
+    {
+        "id": 4,
+        "name": "面包 #4",
+        "category": "面包",
+        "price": 5.35,
+        "image": "/products/bread_zh_4.jpg",
+        "description": "This is a delicious bread in zh.",
+        "comments": [
+            "My kids love it.",
+            "Best I ever tried.",
+            "Fresh and good quality.",
+            "Not bad."
+        ],
+        "rating": 4.0
+    },
+    {
+        "id": 5,
+        "name": "Pastry #5",
+        "category": "Pastry",
+        "price": 78.87,
+        "image": "/products/pastry_en_5.jpg",
+        "description": "This is a delicious pastry in en.",
+        "comments": [
+            "Best I ever tried.",
+            "Could be better."
+        ],
+        "rating": 1.5
+    },
+    {
+        "id": 6,
+        "name": "Pastel #6",
+        "category": "Pastel",
+        "price": 72.99,
+        "image": "/products/pastry_es_6.jpg",
+        "description": "This is a delicious pastry in es.",
+        "comments": [
+            "Best I ever tried.",
+            "Very tasty!",
+            "Could be better.",
+            "Fresh and good quality.",
+            "My kids love it."
+        ],
+        "rating": 1.4
+    },
+    {
+        "id": 7,
+        "name": "Pasticceria #7",
+        "category": "Pasticceria",
+        "price": 25.5,
+        "image": "/products/pastry_it_7.jpg",
+        "description": "This is a delicious pastry in it.",
+        "comments": [
+            "Not bad.",
+            "Very tasty!",
+            "Best I ever tried.",
+            "Highly recommend."
+        ],
+        "rating": 4.8
+    },
+    {
+        "id": 8,
+        "name": "糕点 #8",
+        "category": "糕点",
+        "price": 48.0,
+        "image": "/products/pastry_zh_8.jpg",
+        "description": "This is a delicious pastry in zh.",
+        "comments": [
+            "Could be better.",
+            "Fresh and good quality."
+        ],
+        "rating": 3.7
+    },
+    {
+        "id": 9,
+        "name": "Beverage #9",
+        "category": "Beverage",
+        "price": 36.4,
+        "image": "/products/beverage_en_9.jpg",
+        "description": "This is a delicious beverage in en.",
+        "comments": [
+            "Would buy again.",
+            "Could be better.",
+            "Not bad."
+        ],
+        "rating": 4.9
+    },
+    {
+        "id": 10,
+        "name": "Bebida #10",
+        "category": "Bebida",
+        "price": 79.67,
+        "image": "/products/beverage_es_10.jpg",
+        "description": "This is a delicious beverage in es.",
+        "comments": [
+            "My kids love it.",
+            "Best I ever tried.",
+            "Would buy again."
+        ],
+        "rating": 1.9
+    },
+    {
+        "id": 11,
+        "name": "Bevanda #11",
+        "category": "Bevanda",
+        "price": 39.59,
+        "image": "/products/beverage_it_11.jpg",
+        "description": "This is a delicious beverage in it.",
+        "comments": [
+            "Fresh and good quality.",
+            "Not bad.",
+            "Very tasty!"
+        ],
+        "rating": 4.3
+    },
+    {
+        "id": 12,
+        "name": "饮料 #12",
+        "category": "饮料",
+        "price": 29.85,
+        "image": "/products/beverage_zh_12.jpg",
+        "description": "This is a delicious beverage in zh.",
+        "comments": [
+            "My kids love it.",
+            "Fresh and good quality.",
+            "Best I ever tried.",
+            "Not bad."
+        ],
+        "rating": 2.6
+    },
+    {
+        "id": 13,
+        "name": "Snack #13",
+        "category": "Snack",
+        "price": 59.02,
+        "image": "/products/snack_en_13.jpg",
+        "description": "This is a delicious snack in en.",
+        "comments": [
+            "Too expensive.",
+            "Best I ever tried."
+        ],
+        "rating": 2.9
+    },
+    {
+        "id": 14,
+        "name": "Bocadillo #14",
+        "category": "Bocadillo",
+        "price": 16.11,
+        "image": "/products/snack_es_14.jpg",
+        "description": "This is a delicious snack in es.",
+        "comments": [
+            "Best I ever tried.",
+            "Fresh and good quality.",
+            "Highly recommend."
+        ],
+        "rating": 2.1
+    },
+    {
+        "id": 15,
+        "name": "Spuntino #15",
+        "category": "Spuntino",
+        "price": 84.01,
+        "image": "/products/snack_it_15.jpg",
+        "description": "This is a delicious snack in it.",
+        "comments": [
+            "Highly recommend.",
+            "Would buy again."
+        ],
+        "rating": 1.6
+    },
+    {
+        "id": 16,
+        "name": "小吃 #16",
+        "category": "小吃",
+        "price": 56.19,
+        "image": "/products/snack_zh_16.jpg",
+        "description": "This is a delicious snack in zh.",
+        "comments": [
+            "Fresh and good quality.",
+            "Could be better."
+        ],
+        "rating": 1.8
+    },
+    {
+        "id": 17,
+        "name": "Dairy #17",
+        "category": "Dairy",
+        "price": 99.41,
+        "image": "/products/dairy_en_17.jpg",
+        "description": "This is a delicious dairy in en.",
+        "comments": [
+            "Could be better.",
+            "Would buy again.",
+            "Highly recommend."
+        ],
+        "rating": 1.5
+    },
+    {
+        "id": 18,
+        "name": "Lácteos #18",
+        "category": "Lácteos",
+        "price": 71.2,
+        "image": "/products/dairy_es_18.jpg",
+        "description": "This is a delicious dairy in es.",
+        "comments": [
+            "Too expensive.",
+            "Could be better."
+        ],
+        "rating": 3.6
+    },
+    {
+        "id": 19,
+        "name": "Latticini #19",
+        "category": "Latticini",
+        "price": 80.76,
+        "image": "/products/dairy_it_19.jpg",
+        "description": "This is a delicious dairy in it.",
+        "comments": [
+            "Too expensive.",
+            "Highly recommend."
+        ],
+        "rating": 4.4
+    },
+    {
+        "id": 20,
+        "name": "乳制品 #20",
+        "category": "乳制品",
+        "price": 52.54,
+        "image": "/products/dairy_zh_20.jpg",
+        "description": "This is a delicious dairy in zh.",
+        "comments": [
+            "Could be better.",
+            "Not bad."
+        ],
+        "rating": 4.0
+    },
+    {
+        "id": 21,
+        "name": "Meat #21",
+        "category": "Meat",
+        "price": 78.03,
+        "image": "/products/meat_en_21.jpg",
+        "description": "This is a delicious meat in en.",
+        "comments": [
+            "Very tasty!",
+            "Not bad.",
+            "Would buy again.",
+            "Best I ever tried.",
+            "Too expensive."
+        ],
+        "rating": 1.1
+    },
+    {
+        "id": 22,
+        "name": "Carne #22",
+        "category": "Carne",
+        "price": 89.24,
+        "image": "/products/meat_es_22.jpg",
+        "description": "This is a delicious meat in es.",
+        "comments": [
+            "Too expensive.",
+            "Would buy again.",
+            "Not bad."
+        ],
+        "rating": 4.0
+    },
+    {
+        "id": 23,
+        "name": "Carne #23",
+        "category": "Carne",
+        "price": 63.92,
+        "image": "/products/meat_it_23.jpg",
+        "description": "This is a delicious meat in it.",
+        "comments": [
+            "Could be better.",
+            "Would buy again.",
+            "Best I ever tried.",
+            "My kids love it.",
+            "Too expensive."
+        ],
+        "rating": 4.1
+    },
+    {
+        "id": 24,
+        "name": "肉类 #24",
+        "category": "肉类",
+        "price": 66.04,
+        "image": "/products/meat_zh_24.jpg",
+        "description": "This is a delicious meat in zh.",
+        "comments": [
+            "Could be better.",
+            "Highly recommend.",
+            "Best I ever tried.",
+            "Not bad.",
+            "My kids love it."
+        ],
+        "rating": 2.3
+    },
+    {
+        "id": 25,
+        "name": "Fruit #25",
+        "category": "Fruit",
+        "price": 71.71,
+        "image": "/products/fruit_en_25.jpg",
+        "description": "This is a delicious fruit in en.",
+        "comments": [
+            "Too expensive.",
+            "Best I ever tried.",
+            "Highly recommend."
+        ],
+        "rating": 3.3
+    },
+    {
+        "id": 26,
+        "name": "Fruta #26",
+        "category": "Fruta",
+        "price": 67.89,
+        "image": "/products/fruit_es_26.jpg",
+        "description": "This is a delicious fruit in es.",
+        "comments": [
+            "Fresh and good quality.",
+            "Highly recommend."
+        ],
+        "rating": 1.9
+    },
+    {
+        "id": 27,
+        "name": "Frutta #27",
+        "category": "Frutta",
+        "price": 21.07,
+        "image": "/products/fruit_it_27.jpg",
+        "description": "This is a delicious fruit in it.",
+        "comments": [
+            "Could be better.",
+            "Fresh and good quality.",
+            "Would buy again."
+        ],
+        "rating": 3.9
+    },
+    {
+        "id": 28,
+        "name": "水果 #28",
+        "category": "水果",
+        "price": 25.82,
+        "image": "/products/fruit_zh_28.jpg",
+        "description": "This is a delicious fruit in zh.",
+        "comments": [
+            "Too expensive.",
+            "My kids love it.",
+            "Fresh and good quality."
+        ],
+        "rating": 2.0
+    },
+    {
+        "id": 29,
+        "name": "Vegetable #29",
+        "category": "Vegetable",
+        "price": 21.78,
+        "image": "/products/vegetable_en_29.jpg",
+        "description": "This is a delicious vegetable in en.",
+        "comments": [
+            "Too expensive.",
+            "My kids love it.",
+            "Highly recommend.",
+            "Not bad."
+        ],
+        "rating": 4.6
+    },
+    {
+        "id": 30,
+        "name": "Verdura #30",
+        "category": "Verdura",
+        "price": 58.93,
+        "image": "/products/vegetable_es_30.jpg",
+        "description": "This is a delicious vegetable in es.",
+        "comments": [
+            "Highly recommend.",
+            "Very tasty!",
+            "Fresh and good quality."
+        ],
+        "rating": 2.5
+    },
+    {
+        "id": 31,
+        "name": "Verdura #31",
+        "category": "Verdura",
+        "price": 20.68,
+        "image": "/products/vegetable_it_31.jpg",
+        "description": "This is a delicious vegetable in it.",
+        "comments": [
+            "Very tasty!",
+            "Could be better."
+        ],
+        "rating": 3.4
+    },
+    {
+        "id": 32,
+        "name": "蔬菜 #32",
+        "category": "蔬菜",
+        "price": 64.51,
+        "image": "/products/vegetable_zh_32.jpg",
+        "description": "This is a delicious vegetable in zh.",
+        "comments": [
+            "Would buy again.",
+            "My kids love it."
+        ],
+        "rating": 2.2
+    },
+    {
+        "id": 33,
+        "name": "Seafood #33",
+        "category": "Seafood",
+        "price": 52.03,
+        "image": "/products/seafood_en_33.jpg",
+        "description": "This is a delicious seafood in en.",
+        "comments": [
+            "Fresh and good quality.",
+            "Highly recommend."
+        ],
+        "rating": 3.2
+    },
+    {
+        "id": 34,
+        "name": "Mariscos #34",
+        "category": "Mariscos",
+        "price": 29.03,
+        "image": "/products/seafood_es_34.jpg",
+        "description": "This is a delicious seafood in es.",
+        "comments": [
+            "Too expensive.",
+            "Fresh and good quality.",
+            "Very tasty!",
+            "Could be better."
+        ],
+        "rating": 4.8
+    },
+    {
+        "id": 35,
+        "name": "Frutti di mare #35",
+        "category": "Frutti di mare",
+        "price": 91.31,
+        "image": "/products/seafood_it_35.jpg",
+        "description": "This is a delicious seafood in it.",
+        "comments": [
+            "Very tasty!",
+            "My kids love it."
+        ],
+        "rating": 4.2
+    },
+    {
+        "id": 36,
+        "name": "海鲜 #36",
+        "category": "海鲜",
+        "price": 20.12,
+        "image": "/products/seafood_zh_36.jpg",
+        "description": "This is a delicious seafood in zh.",
+        "comments": [
+            "Very tasty!",
+            "Best I ever tried.",
+            "Fresh and good quality."
+        ],
+        "rating": 3.5
+    },
+    {
+        "id": 37,
+        "name": "Dessert #37",
+        "category": "Dessert",
+        "price": 97.69,
+        "image": "/products/dessert_en_37.jpg",
+        "description": "This is a delicious dessert in en.",
+        "comments": [
+            "Too expensive.",
+            "Not bad.",
+            "Fresh and good quality."
+        ],
+        "rating": 3.3
+    },
+    {
+        "id": 38,
+        "name": "Postre #38",
+        "category": "Postre",
+        "price": 81.4,
+        "image": "/products/dessert_es_38.jpg",
+        "description": "This is a delicious dessert in es.",
+        "comments": [
+            "Not bad.",
+            "Could be better.",
+            "Very tasty!",
+            "Best I ever tried."
+        ],
+        "rating": 1.2
+    },
+    {
+        "id": 39,
+        "name": "Dessert #39",
+        "category": "Dessert",
+        "price": 17.66,
+        "image": "/products/dessert_it_39.jpg",
+        "description": "This is a delicious dessert in it.",
+        "comments": [
+            "Not bad.",
+            "Could be better.",
+            "Highly recommend."
+        ],
+        "rating": 4.2
+    },
+    {
+        "id": 40,
+        "name": "甜点 #40",
+        "category": "甜点",
+        "price": 91.34,
+        "image": "/products/dessert_zh_40.jpg",
+        "description": "This is a delicious dessert in zh.",
+        "comments": [
+            "Not bad.",
+            "Very tasty!",
+            "Would buy again."
+        ],
+        "rating": 1.7
+    }
+]
