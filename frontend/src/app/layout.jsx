@@ -2,6 +2,7 @@ import REMOVED_SECRET./globals.cssREMOVED_SECRET;
 import Header from REMOVED_SECRET../components/HeaderREMOVED_SECRET;
 import Footer from REMOVED_SECRET../components/FooterREMOVED_SECRET;
 import SearchSection from REMOVED_SECRET../components/SearchSectionREMOVED_SECRET;
+import CategoryList from REMOVED_SECRET../components/CategoryListREMOVED_SECRET;
 
 
 export const metadata = {

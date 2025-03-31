@@ -30,11 +30,11 @@ export default function SearchPage() {
 
   return (
     <main className=REMOVED_SECRETp-4 flex flex-col items-centerREMOVED_SECRET>
-      <h1 className=REMOVED_SECRETtext-xl font-bold mb-4REMOVED_SECRET>We also search for REMOVED_SECRET{query}REMOVED_SECRET</h1>
+      <h1 className=REMOVED_SECRETtext-xl font-bold mb-4REMOVED_SECRET>Search Results from multilanguages 🌎 </h1>
 
       {suggestions.length > 0 && (
         <div className=REMOVED_SECRETbg-white p-3 rounded shadow mb-4 text-centerREMOVED_SECRET>
-          <p className=REMOVED_SECRETtext-sm text-gray-700 mb-1REMOVED_SECRET>Relevant results:</p>
+          <p className=REMOVED_SECRETtext-sm text-gray-700 mb-1REMOVED_SECRET>We also search for:</p>
           <ul className=REMOVED_SECRETflex gap-2 text-sm text-pink-600 justify-centerREMOVED_SECRET>
             {suggestions.map((item, i) => (
               <li key={i}>{item}</li>
