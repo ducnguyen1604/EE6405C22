@@ -33,7 +33,7 @@ export default function SearchPage() {
     suggestions.length === 0 || suggestions.includes(REMOVED_SECRETNo relevant resultREMOVED_SECRET);
 
   return (
-    <main className=REMOVED_SECRETpt-24 px-4 pb-10 flex flex-col items-center bg-white min-h-screenREMOVED_SECRET>
+    <main className=REMOVED_SECRETcontent-under-header px-4 pb-10 flex flex-col items-center bg-white min-h-screenREMOVED_SECRET>
       <h1 className=REMOVED_SECRETtext-xl font-bold mb-4REMOVED_SECRET>
         Search Results from multilanguages 🌎
       </h1>
