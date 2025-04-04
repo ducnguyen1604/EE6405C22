@@ -2,15 +2,17 @@ REMOVED_SECRETuse clientREMOVED_SECRET;
 
 import { useSearchParams } from REMOVED_SECRETnext/navigationREMOVED_SECRET;
 import { useEffect, useState } from REMOVED_SECRETreactREMOVED_SECRET;
+import dummyProducts from REMOVED_SECRET../../utils/dummyProductsREMOVED_SECRET;
+import ProductCard from REMOVED_SECRET@/components/ProductCardREMOVED_SECRET;
+import SearchBar from REMOVED_SECRET@/components/SearchBarREMOVED_SECRET;
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const query = searchParams.get(REMOVED_SECRETqREMOVED_SECRET);
+  const query = searchParams.get(REMOVED_SECRETqREMOVED_SECRET) || REMOVED_SECRETREMOVED_SECRET;
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     if (query) {
-      // API backend call
       const fetchSuggestions = async () => {
         const mockBackendSuggestions = {
           bread: [REMOVED_SECRETbanh miREMOVED_SECRET, REMOVED_SECRETmianbaoREMOVED_SECRET],
@@ -31,29 +33,36 @@ export default function SearchPage() {
     suggestions.length === 0 || suggestions.includes(REMOVED_SECRETNo relevant resultREMOVED_SECRET);
 
   return (
-    <main className=REMOVED_SECRETp-4 flex flex-col items-centerREMOVED_SECRET>
+    <main className=REMOVED_SECRETpt-24 px-4 pb-10 flex flex-col items-center bg-white min-h-screenREMOVED_SECRET>
       <h1 className=REMOVED_SECRETtext-xl font-bold mb-4REMOVED_SECRET>
         Search Results from multilanguages 🌎
       </h1>
 
-      {!isNoResult && (
-        <div className=REMOVED_SECRETbg-white p-3 rounded shadow mb-4 text-centerREMOVED_SECRET>
-          <p className=REMOVED_SECRETtext-sm text-gray-700 mb-1REMOVED_SECRET>We also search for:</p>
-          <ul className=REMOVED_SECRETflex gap-2 text-sm text-pink-600 justify-centerREMOVED_SECRET>
-            {suggestions.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* Pass initialValue to persist query in input */}
+      <SearchBar initialValue={query} />
 
-      {isNoResult && (
-        <p className=REMOVED_SECRETtext-gray-600 mt-4REMOVED_SECRET>
+      {!isNoResult ? (
+        <>
+          <div className=REMOVED_SECRETbg-white p-4 rounded shadow mt-6 mb-6 text-center w-full max-w-2xlREMOVED_SECRET>
+            <p className=REMOVED_SECRETtext-sm text-gray-700 mb-1REMOVED_SECRET>We also search for:</p>
+            <ul className=REMOVED_SECRETflex flex-wrap gap-2 text-sm text-pink-600 justify-centerREMOVED_SECRET>
+              {suggestions.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className=REMOVED_SECRETgrid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-fullREMOVED_SECRET>
+            {dummyProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <p className=REMOVED_SECRETtext-gray-600 mt-8REMOVED_SECRET>
           Sorry, we currently do not have this product 😢
         </p>
       )}
-
-      {/* Product results can go here */}
     </main>
   );
 }
