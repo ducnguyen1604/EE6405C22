@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const products = ["Bread", "Shirt"];
+const products = ["Mouth Spray", "Bread", "Shirt"];
 
 export default function CategoryList() {
   const [displayText, setDisplayText] = useState("");
