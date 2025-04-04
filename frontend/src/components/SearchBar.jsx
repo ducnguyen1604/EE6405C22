@@ -1,11 +1,15 @@
 REMOVED_SECRETuse clientREMOVED_SECRET;
 
 import { useRouter, usePathname } from REMOVED_SECRETnext/navigationREMOVED_SECRET;
-import { useState } from REMOVED_SECRETreactREMOVED_SECRET;
+import { useState, useEffect } from REMOVED_SECRETreactREMOVED_SECRET;
 
-export default function SearchBar() {
-  const [query, setQuery] = useState(REMOVED_SECRETREMOVED_SECRET);
+export default function SearchBar({ initialValue = REMOVED_SECRETREMOVED_SECRET}) {
+  const [query, setQuery] = useState(initialValue);
   const router = useRouter();
+
+  useEffect(() => {
+    setQuery(initialValue);
+  }, [initialValue]);
 
   const handleSearch = (e) => {
     e.preventDefault();

@@ -45,12 +45,6 @@ export default function SearchSection() {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, index]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query.trim() !== REMOVED_SECRETREMOVED_SECRET) {
-      router.push(`/search?q=${encodeURIComponent(query)}`);
-    }
-  };
 
   return (
     <section className=REMOVED_SECRETmin-h-[calc(100vh-64px)] flex items-center justify-center bg-pink-50 text-center shadow-innerREMOVED_SECRET>
