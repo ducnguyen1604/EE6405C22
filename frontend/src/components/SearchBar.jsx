@@ -1,15 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useState } from "react";
 
-export default function SearchBar({ initialValue = "" }) {
-  const [query, setQuery] = useState(initialValue);
+export default function SearchBar() {
+  const [query, setQuery] = useState("");
   const router = useRouter();
-
-  useEffect(() => {
-    setQuery(initialValue); // update if URL query changes
-  }, [initialValue]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -21,14 +17,14 @@ export default function SearchBar({ initialValue = "" }) {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 max-w-2xl"
+      className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4"
     >
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for products..."
-        className="border border-pink-300 p-4 rounded w-full shadow-md text-lg"
+        className="border border-pink-300 p-4 rounded w-full max-w-xl shadow-md text-lg"
       />
       <button
         type="submit"
