@@ -33,7 +33,7 @@ export default function SearchPage() {
     suggestions.length === 0 || suggestions.includes("No relevant result");
 
   return (
-    <main className="pt-24 px-4 pb-10 flex flex-col items-center bg-white min-h-screen">
+    <main className="content-under-header px-4 pb-10 flex flex-col items-center bg-white min-h-screen">
       <h1 className="text-xl font-bold mb-4">
         Search Results from multilanguages 🌎
       </h1>
