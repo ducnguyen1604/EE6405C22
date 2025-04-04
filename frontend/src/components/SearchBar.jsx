@@ -1,11 +1,15 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function SearchBar() {
-  const [query, setQuery] = useState("");
+export default function SearchBar({ initialValue = ""}) {
+  const [query, setQuery] = useState(initialValue);
   const router = useRouter();
+
+  useEffect(() => {
+    setQuery(initialValue);
+  }, [initialValue]);
 
   const handleSearch = (e) => {
     e.preventDefault();
