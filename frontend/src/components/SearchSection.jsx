@@ -43,7 +43,7 @@ export default function SearchSection() {
           />
           <button
             type=REMOVED_SECRETsubmitREMOVED_SECRET
-            className=REMOVED_SECRETbg-pink-500 text-white px-4 md:px-6 rounded hover:bg-pink-600REMOVED_SECRET
+            className=REMOVED_SECRETbg-pink-500 text-white px-4 md:px-6 rounded hover:bg-pink-600 active:scale-95 active:bg-pink-700 transition-all duration-150 shadow-md hover:shadow-lgREMOVED_SECRET
           >
             Search
           </button>

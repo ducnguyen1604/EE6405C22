@@ -2,7 +2,7 @@ REMOVED_SECRETuse clientREMOVED_SECRET;
 
 import { useState, useEffect } from REMOVED_SECRETreactREMOVED_SECRET;
 
-const products = [REMOVED_SECRETBreadREMOVED_SECRET, REMOVED_SECRETShirtREMOVED_SECRET];
+const products = [REMOVED_SECRETMouth SprayREMOVED_SECRET, REMOVED_SECRETBreadREMOVED_SECRET, REMOVED_SECRETShirtREMOVED_SECRET];
 
 export default function CategoryList() {
   const [displayText, setDisplayText] = useState(REMOVED_SECRETREMOVED_SECRET);
