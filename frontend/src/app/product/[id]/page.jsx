@@ -40,18 +40,61 @@ export default function ProductDetail({ params }) {
             {product.description}
           </p>
           <div className="flex gap-6 items-center text-sm text-gray-500">
-            <span className="text-yellow-500 text-base">⭐ {product.rating}</span>
+            <span className="text-yellow-500 text-base">
+              ⭐ {product.rating}
+            </span>
             <span>{product.comments.length} comments</span>
           </div>
-          <div className="text-3xl font-bold text-pink-600">${product.price}</div>
+          <div className="text-3xl font-bold text-pink-600">
+            ${product.price}
+          </div>
           <button className="mt-2 bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 active:scale-95 transition-all shadow-md w-fit">
             Add to Cart
           </button>
         </div>
       </div>
 
-      {/* Custom CSS animation */}
-      
+      {/* Comment Section */}
+      <section className="mt-16">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          What our guests say 💬
+        </h2>
+        <div className="space-y-6">
+          {product.comments.map((text, i) => {
+            // Generate a creative anonymous username
+            const namePool = [
+              "Peach",
+              "Cloud",
+              "Pine",
+              "Leaf",
+              "Berry",
+              "Rain",
+              "Sun",
+              "Blossom",
+            ];
+            const emojiPool = ["🍀", "🌸", "🌿", "☁️", "🍓", "🌼", "🌞", "🍃"];
+            const username = `${emojiPool[i % emojiPool.length]} Guest ${
+              namePool[i % namePool.length]
+            }_${Math.floor(Math.random() * 90 + 10)}`;
+
+            // Generate a random rating between 3.5 and 5.0
+            const rating = (Math.random() * 1.5 + 3.5).toFixed(1);
+
+            return (
+              <div
+                key={i}
+                className="bg-white rounded-xl shadow p-4 border border-pink-100"
+              >
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-medium text-pink-600">{username}</span>
+                  <span className="text-yellow-500 text-sm">⭐ {rating}</span>
+                </div>
+                <p className="text-gray-700 text-sm">{text}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </main>
   );
 }
