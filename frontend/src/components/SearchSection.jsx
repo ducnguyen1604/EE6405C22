@@ -74,7 +74,7 @@ export default function SearchSection() {
         )}
 
         {/* Reusable search bar here */}
-        <SearchBar />
+        <SearchBar className=REMOVED_SECRETmx-autoREMOVED_SECRET />
       </div>
       <style jsx>{`
         .blinking-cursor {
