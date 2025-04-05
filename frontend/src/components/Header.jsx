@@ -8,6 +8,7 @@ export default function Header() {
   const [language, setLanguage] = useState("en");
   const router = useRouter();
 
+  
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
   }, [darkMode]);
@@ -32,12 +33,13 @@ export default function Header() {
           className="p-2 rounded border"
         >
           <option value="en">English</option>
-          <option value="vi">Tiếng Việt</option>
+          <option value="sp">Spainish</option>
+          <option value="it">Italian</option>
           <option value="zh">中文</option>
         </select>
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className="px-4 py-2 bg-pink-500 text-white rounded"
+          className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 active:scale-95 active:bg-pink-700 transition-all duration-150 shadow-md hover:shadow-lg"
         >
           {darkMode ? "Light Mode" : "Dark Mode"}
         </button>
