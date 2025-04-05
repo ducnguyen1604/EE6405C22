@@ -1,9 +1,6 @@
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import SearchSection from "../components/SearchSection";
-import CategoryList from "../components/CategoryList";
-
 
 export const metadata = {
   title: "My E-Shop",
@@ -15,8 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Header />
-        <SearchSection />
-        <main>{children}</main>
+        {children}
         <Footer />
       </body>
     </html>
