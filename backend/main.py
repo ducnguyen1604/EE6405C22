@@ -47,21 +47,21 @@ def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVE
 
     translated_queries.append(q.lower().strip())
 
-    print(REMOVED_SECRETTranslated Queries:REMOVED_SECRET, translated_queries)
+    #(REMOVED_SECRETTranslated Queries:REMOVED_SECRET, translated_queries)
 
     matched = []
     all_products = db.all()
-    print(fREMOVED_SECRETLoaded {len(all_products)} productsREMOVED_SECRET)
+    #print(fREMOVED_SECRETLoaded {len(all_products)} productsREMOVED_SECRET)
 
     for product in all_products:
-        print(REMOVED_SECRETChecking product:REMOVED_SECRET, product[REMOVED_SECRETidREMOVED_SECRET])
+        #print(REMOVED_SECRETChecking product:REMOVED_SECRET, product[REMOVED_SECRETidREMOVED_SECRET])
         for lang in [REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETesREMOVED_SECRET, REMOVED_SECRETitREMOVED_SECRET, REMOVED_SECRETzhREMOVED_SECRET]:
             name = product[REMOVED_SECRETnameREMOVED_SECRET].get(lang, REMOVED_SECRETREMOVED_SECRET).lower().strip()
             desc = product[REMOVED_SECRETdescriptionREMOVED_SECRET].get(lang, REMOVED_SECRETREMOVED_SECRET).lower().strip()
 
             for query in translated_queries:
                 if query in name or query in desc:
-                    print(fREMOVED_SECRETMatched on {lang} for query '{query}' → {name}REMOVED_SECRET)
+                    #print(fREMOVED_SECRETMatched on {lang} for query '{query}' → {name}REMOVED_SECRET)
                     matched.append(product)
                     break
             else:
