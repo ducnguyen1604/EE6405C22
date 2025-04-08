@@ -7,7 +7,15 @@ import SearchBar from REMOVED_SECRET@/components/SearchBarREMOVED_SECRET;
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const query = searchParams.get(REMOVED_SECRETqREMOVED_SECRET) || REMOVED_SECRETREMOVED_SECRET;
+  const [query, setQuery] = useState(REMOVED_SECRETREMOVED_SECRET);
+  const [langs, setLangs] = useState(REMOVED_SECRETREMOVED_SECRET);
+
+  useEffect(() => {
+    const q = searchParams.get(REMOVED_SECRETqREMOVED_SECRET) || REMOVED_SECRETREMOVED_SECRET;
+    const l = searchParams.get(REMOVED_SECRETlangsREMOVED_SECRET) || REMOVED_SECRETREMOVED_SECRET;
+    setQuery(q);
+    setLangs(l);
+  }, [searchParams]);
 
   const [products, setProducts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
@@ -19,8 +27,11 @@ export default function SearchPage() {
       const fetchProducts = async () => {
         try {
           const res = await fetch(
-            `http://127.0.0.1:8000/search?q=${encodeURIComponent(query)}`
+            `http://127.0.0.1:8000/search?q=${encodeURIComponent(
+              query
+            )}&langs=${encodeURIComponent(langs)}`
           );
+
           const data = await res.json();
           console.log(REMOVED_SECRETFetched data from backend:REMOVED_SECRET, data);
           const translationEntries = Object.entries(data.translations || {});
@@ -71,11 +82,12 @@ export default function SearchPage() {
         <>
           <div className=REMOVED_SECRETbg-white p-4 px-5 rounded shadow mt-6 mb-6 text-center w-full max-w-2xlREMOVED_SECRET>
             <p className=REMOVED_SECRETtext-sm text-gray-700 mb-1REMOVED_SECRET>We also searched for:</p>
-            <ul className=REMOVED_SECRETflex flex-col sm:flex-row flex-wrap gap-2 text-sm text-pink-600 justify-centerREMOVED_SECRET>
+            <ul className=REMOVED_SECRETflex flex-col sm:flex-row flex-wrap gap-2 text-sm justify-centerREMOVED_SECRET>
               {Array.isArray(suggestions) && suggestions.length > 0 ? (
                 suggestions.map(([lang, word], i) => (
                   <li key={i}>
-                    <span className=REMOVED_SECRETfont-mediumREMOVED_SECRET>{lang}:</span> {word}
+                    <span className=REMOVED_SECRETfont-medium text-blackREMOVED_SECRET>{lang}:</span>{REMOVED_SECRET REMOVED_SECRET}
+                    <span className=REMOVED_SECRETtext-pink-600REMOVED_SECRET>{word}</span>
                   </li>
                 ))
               ) : (
