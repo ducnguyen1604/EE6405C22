@@ -2,3 +2,5 @@ fastapi
 uvicorn
 tinydb
 pydantic
+fuzzywuzzy
+python-Levenshtein
