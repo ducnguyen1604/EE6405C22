@@ -83,7 +83,7 @@ export default function SearchSection() {
         )}
 
         {/* Reusable search bar */}
-        <SearchBar className=REMOVED_SECRETmx-autoREMOVED_SECRET />
+        <SearchBar className=REMOVED_SECRETmx-autoREMOVED_SECRET languages={selectedLangs}/>
 
         {/* Language options */}
         <div className=REMOVED_SECRETmt-6 text-gray-700 text-lg font-mediumREMOVED_SECRET>

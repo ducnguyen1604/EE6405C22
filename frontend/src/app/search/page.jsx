@@ -10,9 +10,11 @@ export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get(REMOVED_SECRETqREMOVED_SECRET) || REMOVED_SECRETREMOVED_SECRET;
   const [suggestions, setSuggestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (query) {
+      setIsLoading(true); // 👈 new
       const fetchSuggestions = async () => {
         const mockBackendSuggestions = {
           bread: [REMOVED_SECRETbanh miREMOVED_SECRET, REMOVED_SECRETmianbaoREMOVED_SECRET],
@@ -20,10 +22,12 @@ export default function SearchPage() {
           shirt: [REMOVED_SECRETaoREMOVED_SECRET, REMOVED_SECRETchen shanREMOVED_SECRET],
         };
         const normalizedQuery = query.toLowerCase();
-        const result =
-          mockBackendSuggestions[normalizedQuery] || [REMOVED_SECRETNo relevant resultREMOVED_SECRET];
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        const result = mockBackendSuggestions[normalizedQuery] || [
+          REMOVED_SECRETNo relevant resultREMOVED_SECRET,
+        ];
+        await new Promise((resolve) => setTimeout(resolve, 500)); // fake delay
         setSuggestions(result);
+        setIsLoading(false); // 👈 new
       };
 
       fetchSuggestions();
@@ -41,10 +45,13 @@ export default function SearchPage() {
 
       {/* Pass initialValue to persist query in input */}
       <SearchBar initialValue={query} />
-
-      {!isNoResult ? (
+      {isLoading ? (
+        <p className=REMOVED_SECRETtext-pink-600 text-lg mt-10 animate-pulseREMOVED_SECRET>
+          Loading results...
+        </p>
+      ) : !isNoResult ? (
         <>
-          <div className=REMOVED_SECRETbg-white p-4 rounded shadow mt-6 mb-6 text-center w-full max-w-2xlREMOVED_SECRET>
+         <div className=REMOVED_SECRETbg-white p-4 rounded shadow mt-6 mb-6 text-center w-full max-w-2xlREMOVED_SECRET>
             <p className=REMOVED_SECRETtext-sm text-gray-700 mb-1REMOVED_SECRET>We also search for:</p>
             <ul className=REMOVED_SECRETflex flex-wrap gap-2 text-sm text-pink-600 justify-centerREMOVED_SECRET>
               {suggestions.map((item, i) => (
@@ -58,12 +65,15 @@ export default function SearchPage() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
+        
         </>
       ) : (
         <p className=REMOVED_SECRETtext-gray-600 mt-8REMOVED_SECRET>
           Sorry, we currently do not have this product 😢
         </p>
       )}
+
+     
     </main>
   );
 }
