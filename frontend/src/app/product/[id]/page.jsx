@@ -1,8 +1,38 @@
-import dummyProducts from REMOVED_SECRET@/utils/dummyProductsREMOVED_SECRET;
+REMOVED_SECRETuse clientREMOVED_SECRET;
 
-export default function ProductDetail({ params }) {
-  const { id } = params;
-  const product = dummyProducts.find((p) => p.id.toString() === id);
+import { useEffect, useState } from REMOVED_SECRETreactREMOVED_SECRET;
+import { useParams } from REMOVED_SECRETnext/navigationREMOVED_SECRET;
+
+export default function ProductDetail() {
+  const { id } = useParams(); // From dynamic route
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`http://127.0.0.1:8000/product/${id}`);
+        if (!res.ok) throw new Error(REMOVED_SECRETProduct not foundREMOVED_SECRET);
+        const data = await res.json();
+        setProduct(data);
+      } catch (err) {
+        console.error(err);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className=REMOVED_SECRETp-8 text-center text-gray-500 text-lgREMOVED_SECRET>Loading...</div>
+    );
+  }
 
   if (!product) {
     return (
@@ -11,6 +41,14 @@ export default function ProductDetail({ params }) {
       </div>
     );
   }
+
+  // Extract fields with fallbacks
+  const name =
+    product.name?.en || Object.values(product.name || {})[0] || REMOVED_SECRETUnnamedREMOVED_SECRET;
+  const desc =
+    product.description?.en ||
+    Object.values(product.description || {})[0] ||
+    REMOVED_SECRETNo descriptionREMOVED_SECRET;
 
   return (
     <main className=REMOVED_SECRETcontent-under-header min-h-[calc(100vh-60px)] px-4 py-10 max-w-6xl mx-auto animate-fade-inREMOVED_SECRET>
@@ -21,7 +59,7 @@ export default function ProductDetail({ params }) {
             {product.image ? (
               <img
                 src={product.image}
-                alt={product.name}
+                alt={name}
                 className=REMOVED_SECRETw-full h-full object-cover rounded-xlREMOVED_SECRET
               />
             ) : (
@@ -32,18 +70,16 @@ export default function ProductDetail({ params }) {
 
         {/* Info Column */}
         <div className=REMOVED_SECRETflex flex-col gap-6REMOVED_SECRET>
-          <h1 className=REMOVED_SECRETtext-4xl font-bold text-pink-700REMOVED_SECRET>{product.name}</h1>
+          <h1 className=REMOVED_SECRETtext-4xl font-bold text-pink-700REMOVED_SECRET>{name}</h1>
           <p className=REMOVED_SECRETtext-lg text-gray-500 capitalizeREMOVED_SECRET>
             Category: {product.category}
           </p>
-          <p className=REMOVED_SECRETtext-base text-gray-700 leading-relaxedREMOVED_SECRET>
-            {product.description}
-          </p>
+          <p className=REMOVED_SECRETtext-base text-gray-700 leading-relaxedREMOVED_SECRET>{desc}</p>
           <div className=REMOVED_SECRETflex gap-6 items-center text-sm text-gray-500REMOVED_SECRET>
             <span className=REMOVED_SECRETtext-yellow-500 text-baseREMOVED_SECRET>
               ⭐ {product.rating}
             </span>
-            <span>{product.comments.length} comments</span>
+            <span>{product.comments?.length || 0} comments</span>
           </div>
           <div className=REMOVED_SECRETtext-3xl font-bold text-pink-600REMOVED_SECRET>
             ${product.price}
@@ -60,8 +96,7 @@ export default function ProductDetail({ params }) {
           What our guests say 💬
         </h2>
         <div className=REMOVED_SECRETspace-y-6REMOVED_SECRET>
-          {product.comments.map((text, i) => {
-            // Generate a creative anonymous username
+          {(product.comments || []).map((text, i) => {
             const namePool = [
               REMOVED_SECRETPeachREMOVED_SECRET,
               REMOVED_SECRETCloudREMOVED_SECRET,
@@ -77,7 +112,6 @@ export default function ProductDetail({ params }) {
               namePool[i % namePool.length]
             }_${Math.floor(Math.random() * 90 + 10)}`;
 
-            // Generate a random rating between 3.5 and 5.0
             const rating = (Math.random() * 1.5 + 3.5).toFixed(1);
 
             return (
