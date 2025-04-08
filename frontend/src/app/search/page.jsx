@@ -16,6 +16,7 @@ export default function SearchPage() {
       const fetchSuggestions = async () => {
         const mockBackendSuggestions = {
           bread: [REMOVED_SECRETbanh miREMOVED_SECRET, REMOVED_SECRETmianbaoREMOVED_SECRET],
+          REMOVED_SECRETmouth sprayREMOVED_SECRET: [REMOVED_SECRET口腔喷雾REMOVED_SECRET, REMOVED_SECRETspray oraleREMOVED_SECRET],
           shirt: [REMOVED_SECRETaoREMOVED_SECRET, REMOVED_SECRETchen shanREMOVED_SECRET],
         };
         const normalizedQuery = query.toLowerCase();

@@ -5,11 +5,17 @@ import { useState, useEffect } from REMOVED_SECRETreactREMOVED_SECRET;
 import SearchBar from REMOVED_SECRET@/components/SearchBarREMOVED_SECRET;
 
 const suggestions = [
-  REMOVED_SECRETbánh mìREMOVED_SECRET,
-  REMOVED_SECRETpan dulceREMOVED_SECRET,
-  REMOVED_SECRETcroissantREMOVED_SECRET,
-  REMOVED_SECRETbaguetteREMOVED_SECRET,
-  REMOVED_SECRETpão de queijoREMOVED_SECRET,
+  REMOVED_SECRETMouth SprayREMOVED_SECRET,
+  REMOVED_SECRET口腔喷雾REMOVED_SECRET,
+  REMOVED_SECRETaerosol bucalREMOVED_SECRET,
+  REMOVED_SECRETspray oraleREMOVED_SECRET,
+];
+
+const languages = [
+  { name: REMOVED_SECRETEnglishREMOVED_SECRET, color: REMOVED_SECRET#c026d3REMOVED_SECRET },
+  { name: REMOVED_SECRETChineseREMOVED_SECRET, color: REMOVED_SECRET#ef4444REMOVED_SECRET },
+  { name: REMOVED_SECRETSpanishREMOVED_SECRET, color: REMOVED_SECRET#f59e0bREMOVED_SECRET },
+  { name: REMOVED_SECRETItalianREMOVED_SECRET, color: REMOVED_SECRET#10b981REMOVED_SECRET },
 ];
 
 export default function SearchSection() {
@@ -18,6 +24,8 @@ export default function SearchSection() {
   const [index, setIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [selectedLangs, setSelectedLangs] = useState([]);
+
   const router = useRouter();
   const path = usePathname();
 
@@ -45,6 +53,13 @@ export default function SearchSection() {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, index]);
 
+  const toggleLang = (lang) => {
+    setSelectedLangs((prev) =>
+      prev.includes(lang)
+        ? prev.filter((l) => l !== lang)
+        : [...prev, lang]
+    );
+  };
 
   return (
     <section className=REMOVED_SECRETmin-h-[calc(100vh-64px)] flex items-center justify-center bg-pink-50 text-center shadow-innerREMOVED_SECRET>
@@ -67,16 +82,44 @@ export default function SearchSection() {
           </div>
         )}
 
-        {/* Reusable search bar here */}
+        {/* Reusable search bar */}
         <SearchBar className=REMOVED_SECRETmx-autoREMOVED_SECRET />
+
+        {/* Language options */}
+        <div className=REMOVED_SECRETmt-6 text-gray-700 text-lg font-mediumREMOVED_SECRET>
+          You also want to search in:
+        </div>
+        <div className=REMOVED_SECRETmt-3 flex justify-center flex-wrap gap-3REMOVED_SECRET>
+          {languages.map((lang) => {
+            const isSelected = selectedLangs.includes(lang.name);
+            return (
+              <button
+                key={lang.name}
+                onClick={() => toggleLang(lang.name)}
+                className={`px-4 py-2 rounded-full border-2 font-medium transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ${
+                  isSelected
+                    ? REMOVED_SECRETtext-white bg-pink-500 border-pink-500REMOVED_SECRET
+                    : REMOVED_SECRETtext-gray-700 bg-whiteREMOVED_SECRET
+                }`}
+                style={{
+                  borderColor: lang.color,
+                }}
+              >
+                {lang.name}
+              </button>
+            );
+          })}
+        </div>
       </div>
+
       <style jsx>{`
         .blinking-cursor {
           animation: blink 1s infinite;
         }
 
         @keyframes blink {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 1;
           }
           50% {
