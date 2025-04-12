@@ -1,5 +1,5 @@
 import torch
-from transformers import MBartForConditionalGeneration, MBart50TokenizerFast, Seq2SeqTrainingArguments, Seq2SeqTrainer, GenerationConfig
+from transformers import MBartForConditionalGeneration, MBart50TokenizerFast, Seq2SeqTrainingArguments, Seq2SeqTrainer
 from datasets import load_dataset, concatenate_datasets
 import evaluate
 import numpy as np
@@ -21,19 +21,36 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
 
 # Update the data path to a proper path
 data_path = REMOVED_SECRET../data/REMOVED_SECRET
+
 def load_and_preprocess(lang_pair):
     dataset = load_dataset(REMOVED_SECRETcsvREMOVED_SECRET, data_files={
         REMOVED_SECRETtrainREMOVED_SECRET: fREMOVED_SECRET{data_path}{lang_pair}_train.csvREMOVED_SECRET,
         REMOVED_SECRETvalREMOVED_SECRET: fREMOVED_SECRET{data_path}{lang_pair}_val.csvREMOVED_SECRET,
         REMOVED_SECRETtestREMOVED_SECRET: fREMOVED_SECRET{data_path}{lang_pair}_test.csvREMOVED_SECRET
     })
+    # Add language information to the dataset
+    src_lang, tgt_lang = lang_pair.split(REMOVED_SECRET_REMOVED_SECRET)
+    for split in [REMOVED_SECRETtrainREMOVED_SECRET, REMOVED_SECRETvalREMOVED_SECRET, REMOVED_SECRETtestREMOVED_SECRET]:
+        dataset[split] = dataset[split].add_column(REMOVED_SECRETsource_langREMOVED_SECRET, [src_lang] * len(dataset[split]))
+        dataset[split] = dataset[split].add_column(REMOVED_SECRETtarget_langREMOVED_SECRET, [tgt_lang] * len(dataset[split]))
     return dataset[REMOVED_SECRETtrainREMOVED_SECRET], dataset[REMOVED_SECRETvalREMOVED_SECRET], dataset[REMOVED_SECRETtestREMOVED_SECRET]
 
-
+# Load all language pairs
 lang_pairs = [REMOVED_SECRETen_esREMOVED_SECRET, REMOVED_SECRETen_itREMOVED_SECRET, REMOVED_SECRETen_cnREMOVED_SECRET]
-datasets = {lp: load_and_preprocess(lp) for lp in lang_pairs}
+all_datasets = {lp: load_and_preprocess(lp) for lp in lang_pairs}
 
-#load mBART50
+# Concatenate all training and validation datasets
+train_datasets = []
+val_datasets = []
+for lang_pair in lang_pairs:
+    train_datasets.append(all_datasets[lang_pair][0])
+    val_datasets.append(all_datasets[lang_pair][1])
+
+# Combine all datasets
+combined_train = concatenate_datasets(train_datasets)
+combined_val = concatenate_datasets(val_datasets)
+
+# Load mBART50
 model = MBartForConditionalGeneration.from_pretrained(REMOVED_SECRETfacebook/mbart-large-50-many-to-many-mmtREMOVED_SECRET)
 tokenizer = MBart50TokenizerFast.from_pretrained(REMOVED_SECRETfacebook/mbart-large-50-many-to-many-mmtREMOVED_SECRET)
 
@@ -57,7 +74,11 @@ lang_code_map = {
     REMOVED_SECRETcnREMOVED_SECRET: REMOVED_SECRETzh_CNREMOVED_SECRET
 }
 
-def tokenize_fn(batch, src_lang, tgt_lang):
+def tokenize_fn(batch):
+    # Extract language pair from the dataset
+    src_lang = batch[REMOVED_SECRETsource_langREMOVED_SECRET][0]
+    tgt_lang = batch[REMOVED_SECRETtarget_langREMOVED_SECRET][0]
+    
     tokenizer.src_lang = lang_code_map[src_lang]
     tokenizer.tgt_lang = lang_code_map[tgt_lang]
 
@@ -124,38 +145,32 @@ training_args = Seq2SeqTrainingArguments(
     lr_scheduler_type=REMOVED_SECRETcosineREMOVED_SECRET
 )
 
-for lang_pair in lang_pairs:
-    src, tgt = lang_pair.split(REMOVED_SECRET_REMOVED_SECRET)
-    
-    # Tokenize
-    tokenized_train = datasets[lang_pair][0].map(
-        lambda x: tokenize_fn(x, src, tgt),
-        batched=True
-    )
-    tokenized_val = datasets[lang_pair][1].map(
-        lambda x: tokenize_fn(x, src, tgt),
-        batched=True
-    )
+# Tokenize the combined datasets
+tokenized_train = combined_train.map(
+    tokenize_fn,
+    batched=True
+)
+tokenized_val = combined_val.map(
+    tokenize_fn,
+    batched=True
+)
 
-    # Initialize Trainer
-    trainer = CustomSeq2SeqTrainer(
-        model=model,
-        args=training_args,
-        train_dataset=tokenized_train,
-        eval_dataset=tokenized_val,
-        compute_metrics=compute_metrics,
-        tokenizer=tokenizer
-    )
-    
-    # Set target language for generation
-    trainer.set_target_lang(tgt)
-    
-    print(fREMOVED_SECRET\n=== Training {lang_pair.upper()} ===REMOVED_SECRET)
-    trainer.train()
-    
-    # Save checkpoint
-    model.save_pretrained(fREMOVED_SECRET./mbart50-ecommerce/{lang_pair}REMOVED_SECRET)
-    tokenizer.save_pretrained(fREMOVED_SECRET./mbart50-ecommerce/{lang_pair}REMOVED_SECRET)
+# Initialize Trainer
+trainer = CustomSeq2SeqTrainer(
+    model=model,
+    args=training_args,
+    train_dataset=tokenized_train,
+    eval_dataset=tokenized_val,
+    compute_metrics=compute_metrics,
+    tokenizer=tokenizer
+)
+
+print(REMOVED_SECRET\n=== Training Multilingual Model ===REMOVED_SECRET)
+trainer.train()
+
+# Save the final model
+model.save_pretrained(REMOVED_SECRET./mbart50-ecommerce/finalREMOVED_SECRET)
+tokenizer.save_pretrained(REMOVED_SECRET./mbart50-ecommerce/finalREMOVED_SECRET)
 
 def translate(text, src_lang=REMOVED_SECRETenREMOVED_SECRET, tgt_lang=REMOVED_SECRETesREMOVED_SECRET):
     # Use the correct path format matching your saved models

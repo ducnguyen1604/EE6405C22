@@ -3,3 +3,5 @@
 /notebook/wiki.zh.align.vec
 /notebook/wiki.en.align.vec
 __pycache__
+.env
+/notebook/MT/mBART/final
