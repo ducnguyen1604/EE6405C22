@@ -4,15 +4,19 @@ import os
 import json
 import re
 
-#load api key
-#note, need to create a .env file with api keys in root, add to gitignore
-load_dotenv(dotenv_path='../.env')
-api_key = os.getenv('deepseek_API_KEY')
-
-#init client
-client = OpenAI(api_key=api_key, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
+def get_openai_client():
+    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETInitialize and return an OpenAI client with the appropriate configuration.REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    # Load API key from environment
+    load_dotenv(dotenv_path='../.env')
+    api_key = os.getenv('deepseek_API_KEY')
+    
+    # Initialize and return client
+    return OpenAI(api_key=api_key, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
 
 def get_expanded_queries(user_query):
+    # Initialize client
+    client = get_openai_client()
+    
     prompt=f'''You are an expert search query optimizer. Your task is to expand the following e-commerce search query to improve retrieval of relevant products. Generate a list of semantically related terms, synonyms, and common user variations while preserving the original intent.
 
 **Rules:**

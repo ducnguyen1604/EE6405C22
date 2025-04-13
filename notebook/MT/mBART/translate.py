@@ -1,6 +1,11 @@
 import torch
 from transformers import MBartForConditionalGeneration, MBart50TokenizerFast
 import argparse
+from dotenv import load_dotenv
+import os
+
+load_dotenv(dotenv_path='..../.env')
+model_path = os.getenv('mBART_path')
 
 # Language code mapping
 lang_code_map = {
@@ -53,38 +58,3 @@ def translate_file(model, tokenizer, input_file, output_file, src_lang, tgt_lang
                 translation = translate_sentence(model, tokenizer, text, src_lang, tgt_lang)
                 f_out.write(fREMOVED_SECRET{translation}\nREMOVED_SECRET)
 
-def main():
-    parser = argparse.ArgumentParser(description='Translate text using trained mBART model')
-    parser.add_argument('--model_path', type=str, default=REMOVED_SECRET./mbart50-ecommerce/finalREMOVED_SECRET,
-                        help='Path to the trained model directory (default: ./mbart50-ecommerce/final)')
-    parser.add_argument('--src_lang', type=str, required=True, 
-                        help='Source language code (en, es, it, cn)')
-    parser.add_argument('--tgt_lang', type=str, required=True, 
-                        help='Target language code (en, es, it, cn)')
-    parser.add_argument('--input_file', type=str, 
-                        help='Path to input file with sentences to translate')
-    parser.add_argument('--output_file', type=str, 
-                        help='Path to output file for translations')
-    parser.add_argument('--text', type=str, 
-                        help='Single sentence to translate')
-    
-    args = parser.parse_args()
-    
-    # Load model and tokenizer
-    print(fREMOVED_SECRETLoading model from {args.model_path}...REMOVED_SECRET)
-    model, tokenizer = load_model_and_tokenizer(args.model_path)
-    
-    if args.text:
-        # Translate single sentence
-        translation = translate_sentence(model, tokenizer, args.text, args.src_lang, args.tgt_lang)
-        print(fREMOVED_SECRETInput: {args.text}REMOVED_SECRET)
-        print(fREMOVED_SECRETTranslation: {translation}REMOVED_SECRET)
-    elif args.input_file and args.output_file:
-        # Translate file
-        translate_file(model, tokenizer, args.input_file, args.output_file, args.src_lang, args.tgt_lang)
-        print(fREMOVED_SECRETTranslation complete. Results saved to {args.output_file}REMOVED_SECRET)
-    else:
-        print(REMOVED_SECRETPlease provide either --text for single sentence translation or --input_file and --output_file for file translationREMOVED_SECRET)
-
-if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
-    main() 
