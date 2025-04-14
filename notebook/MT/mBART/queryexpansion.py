@@ -4,18 +4,18 @@ import os
 import json
 import re
 
-def get_openai_client():
+def get_openai_client(env_path):
     REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETInitialize and return an OpenAI client with the appropriate configuration.REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
     # Load API key from environment
-    load_dotenv(dotenv_path='../.env')
+    load_dotenv(dotenv_path=env_path)
     api_key = os.getenv('deepseek_API_KEY')
     
     # Initialize and return client
     return OpenAI(api_key=api_key, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
 
-def get_expanded_queries(user_query):
+def get_expanded_queries(user_query, env_path):
     # Initialize client
-    client = get_openai_client()
+    client = get_openai_client(env_path)
     
     prompt=f'''You are an expert search query optimizer. Your task is to expand the following e-commerce search query to improve retrieval of relevant products. Generate a list of semantically related terms, synonyms, and common user variations while preserving the original intent.
 
@@ -105,8 +105,9 @@ def return_weighted_dict(expanded_queries, include_translations):
 
 
 #full pipeline to be called by other fns
-def expand(input_query, include_translations=True):
-   expanded_list=get_expanded_queries(input_query)
+def expand(input_query, env_path, include_translations=True):
+   expanded_list=get_expanded_queries(input_query, env_path)
    expanded_queries=return_weighted_dict(expanded_list, include_translations)
 
    return expanded_queries
+
