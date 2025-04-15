@@ -58,3 +58,7 @@ def translate_file(model, tokenizer, input_file, output_file, src_lang, tgt_lang
                 translation = translate_sentence(model, tokenizer, text, src_lang, tgt_lang)
                 f_out.write(fREMOVED_SECRET{translation}\nREMOVED_SECRET)
 
+def translate_expanded(model, tokenizer, query_list, src_lang, tgt_lang):
+    for query in query_list:
+        query['term']=translate_sentence(model, tokenizer, query['term'], src_lang, tgt_lang)
+    return query_list
