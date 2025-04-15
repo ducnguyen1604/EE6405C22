@@ -14,7 +14,7 @@ def init_mt_environment(mBART_model_path, data_paths, embed_model, env_path):
 
 #wrapper for easy calling
 
-def mt_pipeline_search(query, tgt_lang, env_path, mBART_model, mBART_tokenizer, data, bm25_corpus, pinecone_indices, dense_embed_model, top_k=5):
+def mt_pipeline_search(query, env_path, mBART_model, mBART_tokenizer, data, bm25_corpus, pinecone_indices, dense_embed_model, tgt_lang='cn' , top_k=5):
 
     print('Expanding queries...')
     expanded_queries=expand(query, env_path, include_translations=False)
