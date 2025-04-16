@@ -18,7 +18,7 @@ API_key = os.getenv(REMOVED_SECRETdeepseek_API_KEYREMOVED_SECRET)
 
 # Initialize Pinecone
 pc = Pinecone(api_key=API_key)
-index = pc.Index('product-title-embeddings')
+index = pc.Index('italian-db')
 
 # Load sentence embedding model
 model = SentenceTransformer(REMOVED_SECRETBAAI/bge-m3REMOVED_SECRET)
