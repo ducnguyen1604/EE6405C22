@@ -12,35 +12,40 @@ api_key = os.getenv('deepseek_API_KEY')
 client = OpenAI(api_key=api_key, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
 
 def get_dynamic_alpha(question, dense_result, bm25_result):
-    prompt = fREMOVED_SECRETREMOVED_SECRETREMOVED_SECRETYou are a multilingual evaluator in a italian ecommerce site assessing the retrieval effectiveness of dense
-retrieval (Cosine Distance) and BM25 retrieval for finding the correct italian product title with respect to the english query.
+    system_prompt = REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETYou are a multilingual evaluator in an Italian e-commerce site assessing the retrieval effectiveness of dense
+retrieval (Cosine Distance) and BM25 retrieval for finding the correct Italian product title given an English-language query.
 
 ## Task:
-Given a question and two top1 search results (one from dense retrieval,
-one from BM25 retrieval), score each retrieval method from **0 to 5** based on whether the correct answer is likely to appear in top2, top3, etc.
+Given a query and two top-1 search results (one from dense retrieval, one from BM25 retrieval), score each method from **0 to 5** based on how likely the correct result is retrieved or nearby.
 
-### **Scoring Criteria:**
-1. **Direct hit --> 5 points**
-- If the retrieved document directly answers the question, assign **5 points**.
-2. **Good wrong result (High likelihood correct answer is nearby) --> 3-4 points**
-3. **Bad wrong result (Low likelihood correct answer is nearby) --> 1-2 points**
-4. **Completely off-track --> 0 points**
+### Scoring Criteria:
+1. **Direct hit → 5 points**
+   - If the retrieved result directly answers the question.
+2. **Good wrong result → 3-4 points**
+   - Answer is not exact, but closely related; likely the correct one is nearby.
+3. **Bad wrong result → 1-2 points**
+   - Loosely related or general, unlikely correct answer is nearby.
+4. **Completely off-track → 0 points**
+   - Retrieval is unrelated.
 
-### **Given Data:**
-- **Question:** REMOVED_SECRET{question}REMOVED_SECRET
-
-- **dense retrieval Top1 Result:** REMOVED_SECRET{dense_result}REMOVED_SECRET
-- **BM25 retrieval Top1 Result:** REMOVED_SECRET{bm25_result}REMOVED_SECRET
-
-### **Output Format:**
+### Output Format:
 Return two integers separated by a space:
-- **First number:** dense retrieval score.
-- **Second number:** BM25 retrieval score.
+- First number: dense retrieval score.
+- Second number: BM25 retrieval score.
+REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+
+    user_prompt = fREMOVED_SECRETREMOVED_SECRETREMOVED_SECRET### Given Data:
+- Question: REMOVED_SECRET{question}REMOVED_SECRET
+- dense retrieval Top1 Result: REMOVED_SECRET{dense_result}REMOVED_SECRET
+- BM25 retrieval Top1 Result: REMOVED_SECRET{bm25_result}REMOVED_SECRET
 REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
 
     response = client.chat.completions.create(
-        model=REMOVED_SECRETdeepseek/deepseek-chat-v3-0324:freeREMOVED_SECRET,  
-        messages=[{REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETuserREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: prompt}],
+        model=REMOVED_SECRETdeepseek/deepseek-chat-v3-0324:freeREMOVED_SECRET,
+        messages=[
+            {REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETsystemREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: system_prompt},
+            {REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETuserREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: user_prompt}
+        ],
         temperature=0
     )
 
@@ -49,7 +54,7 @@ REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
     try:
         dense_score, bm25_score = map(int, output.split())
     except:
-        dense_score = bm25_score = 3  # default fallback
+        dense_score = bm25_score = 3  # fallback if parsing fails
 
     if dense_score == 5 and bm25_score != 5:
         return 1.0
@@ -59,4 +64,5 @@ REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
         return 0.5
     else:
         return dense_score / (dense_score + bm25_score)
+
 
