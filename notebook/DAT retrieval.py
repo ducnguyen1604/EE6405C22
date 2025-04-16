@@ -17,6 +17,7 @@ from openai import OpenAI
 load_dotenv(dotenv_path='../.env')
 CHARRAN_API = os.getenv('CHARRAN_API')
 CHERYL_API = os.getenv('CHERYL_API')
+deepseek_API_KEY = os.getenv('deepseek_API_KEY')
 
 # Initialize Pinecone
 pc = Pinecone(api_key=CHARRAN_API)
@@ -41,7 +42,7 @@ bm25_it = BM25Okapi(tokenized_it)
 #Improved prompt for dynamic alpha calculation using LLM
 
 # Set your OpenAI API key
-client = OpenAI(api_key=REMOVED_SECRETREMOVED_API_KEYREMOVED_SECRET, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
+client = OpenAI(api_key= deepseek_API_KEY, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
 # prompting for dynamic alpha calculation
 def get_dynamic_alpha(question, dense_result, bm25_result):
     system_prompt = REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETYou are a multilingual evaluator in an Italian e-commerce site assessing the retrieval effectiveness of dense
