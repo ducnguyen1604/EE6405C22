@@ -1,5 +1,3 @@
-
-
 from search_modules.chinese import search_chinese
 
 if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
@@ -11,4 +9,9 @@ if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
     else:
         print(REMOVED_SECRET\n✅ Search Results:REMOVED_SECRET)
         for idx, r in enumerate(results, 1):
-            print(fREMOVED_SECRET{idx}. {r['title_zh']} | Similarity: {r['similarity']}REMOVED_SECRET)
+            name = r['product']['name'].get('zh', 'N/A')
+            desc = r['product']['description'].get('zh', '')
+            price = r['product'].get('price', 'N/A')
+            print(fREMOVED_SECRET{idx}. {name} | ¥{price} | BERT F1: {r['bert_score_f1']}REMOVED_SECRET)
+            if desc:
+                print(fREMOVED_SECRET   → {desc}\nREMOVED_SECRET)
