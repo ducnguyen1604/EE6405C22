@@ -1,18 +1,34 @@
-from search_modules.spanish import search_spanish
+from search_modules.spanish import search_spanish_backend
+
+def print_results(results):
+    print(REMOVED_SECRET\n🧪 Raw Output Structure:REMOVED_SECRET)
+    print(fREMOVED_SECRETType: {type(results)}REMOVED_SECRET)
+    if isinstance(results, list):
+        print(fREMOVED_SECRETLength: {len(results)}REMOVED_SECRET)
+        if results:
+            print(REMOVED_SECRETFirst item keys:REMOVED_SECRET, results[0].keys())
+            print(REMOVED_SECRETFirst item sample:REMOVED_SECRET, results[0])
+        else:
+            print(REMOVED_SECRETList is empty.REMOVED_SECRET)
+    
+    print(REMOVED_SECRET\n✅ Top Matching Results:\nREMOVED_SECRET)
+    if not results:
+        print(REMOVED_SECRET❌ No matching results found in TinyDB.REMOVED_SECRET)
+        return
+
+    for i, item in enumerate(results, start=1):
+        product = item[REMOVED_SECRETproductREMOVED_SECRET]
+        score = item[REMOVED_SECRETscoreREMOVED_SECRET]
+        name = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETesREMOVED_SECRET, REMOVED_SECRETUnnamedREMOVED_SECRET)
+        desc = product.get(REMOVED_SECRETdescriptionREMOVED_SECRET, {}).get(REMOVED_SECRETesREMOVED_SECRET, REMOVED_SECRETNo descriptionREMOVED_SECRET)
+        image = product.get(REMOVED_SECRETimageREMOVED_SECRET, REMOVED_SECRETN/AREMOVED_SECRET)
+
+        print(fREMOVED_SECRET{i}. 🛍 {name}REMOVED_SECRET)
+        print(fREMOVED_SECRET   📝 Description: {desc}REMOVED_SECRET)
+        print(fREMOVED_SECRET   🖼 Image: {image}REMOVED_SECRET)
+        print(fREMOVED_SECRET   📊 BERT Score: {score:.4f}\nREMOVED_SECRET)
 
 if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
-    query = input(REMOVED_SECRETEnter a product search query (in Spanish or English): REMOVED_SECRET)
-    results = search_spanish(query)
-
-    if not results:
-        print(REMOVED_SECRET❌ No matching products found.REMOVED_SECRET)
-    else:
-        print(REMOVED_SECRET\n✅ Search Results:REMOVED_SECRET)
-        for idx, r in enumerate(results, 1):
-            name = r['product']['name'].get('en', 'N/A')
-            name_es = r['product']['name'].get('es', '')
-            desc = r['product']['description'].get('es', '')
-            price = r['product'].get('price', 'N/A')
-            print(fREMOVED_SECRET{idx}. {name_es or name} | €{price} | BERT F1: {r['bert_score_f1']}REMOVED_SECRET)
-            if desc:
-                print(fREMOVED_SECRET   → {desc}\nREMOVED_SECRET)
+    query = input(REMOVED_SECRET🔍 Enter a Spanish product search query: REMOVED_SECRET)
+    results = search_spanish_backend(query)
+    print_results(results)

@@ -1,11 +1,21 @@
 from search_modules.chinese import search_chinese_backend
 
 def print_results(results):
+    print(REMOVED_SECRET\n🧪 Raw Output Structure:REMOVED_SECRET)
+    print(fREMOVED_SECRETType: {type(results)}REMOVED_SECRET)
+    if isinstance(results, list):
+        print(fREMOVED_SECRETLength: {len(results)}REMOVED_SECRET)
+        if results:
+            print(REMOVED_SECRETFirst item keys:REMOVED_SECRET, results[0].keys())
+            print(REMOVED_SECRETFirst item sample:REMOVED_SECRET, results[0])
+        else:
+            print(REMOVED_SECRETList is empty.REMOVED_SECRET)
+    
+    print(REMOVED_SECRET\n✅ Top Matching Results:\nREMOVED_SECRET)
     if not results:
         print(REMOVED_SECRET❌ No matching results found in TinyDB.REMOVED_SECRET)
         return
 
-    print(REMOVED_SECRET\n✅ Top Matching Results:\nREMOVED_SECRET)
     for i, item in enumerate(results, start=1):
         product = item[REMOVED_SECRETproductREMOVED_SECRET]
         score = item[REMOVED_SECRETscoreREMOVED_SECRET]

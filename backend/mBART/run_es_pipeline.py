@@ -1,7 +1,7 @@
 import os
 from .mtpipeline import init_mt_environment, mt_pipeline_search
 
-def run_chinese_query(query):
+def run_spanish_query(query):
     # Dynamically construct paths relative to this file's location
     base_path = os.path.dirname(__file__)
     data_paths = {
@@ -37,8 +37,8 @@ def run_chinese_query(query):
 
 # CLI testing
 if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
-    query = input(REMOVED_SECRET🔍 Enter a Chinese query to test the pipeline: REMOVED_SECRET)
-    result = run_chinese_query(query)
+    query = input(REMOVED_SECRET🔍 Enter a Spanish query to test the pipeline: REMOVED_SECRET)
+    result = run_spanish_query(query)
 
     print(REMOVED_SECRET\n📦 Type of result:REMOVED_SECRET, type(result))
     print(REMOVED_SECRET🧪 Is dictionary?REMOVED_SECRET, isinstance(result, dict))
