@@ -1,0 +1,18 @@
+from search_modules.spanish import search_spanish
+
+if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
+    query = input(REMOVED_SECRETEnter a product search query (in Spanish or English): REMOVED_SECRET)
+    results = search_spanish(query)
+
+    if not results:
+        print(REMOVED_SECRET❌ No matching products found.REMOVED_SECRET)
+    else:
+        print(REMOVED_SECRET\n✅ Search Results:REMOVED_SECRET)
+        for idx, r in enumerate(results, 1):
+            name = r['product']['name'].get('en', 'N/A')
+            name_es = r['product']['name'].get('es', '')
+            desc = r['product']['description'].get('es', '')
+            price = r['product'].get('price', 'N/A')
+            print(fREMOVED_SECRET{idx}. {name_es or name} | €{price} | BERT F1: {r['bert_score_f1']}REMOVED_SECRET)
+            if desc:
+                print(fREMOVED_SECRET   → {desc}\nREMOVED_SECRET)

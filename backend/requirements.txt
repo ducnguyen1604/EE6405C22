@@ -4,6 +4,8 @@ tinydb
 pydantic
 fuzzywuzzy
 python-Levenshtein
+sentencepiece
+
 
 numpy==2.2.4
 pandas==2.2.3
@@ -23,3 +25,12 @@ dotenv==0.9.9
 python-dotenv==1.1.0
 nltk==3.9.1
 langdetect==1.0.9
+
+'''
+for mac:
+git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+./bootstrap-vcpkg.sh
+./vcpkg integrate install
+./vcpkg install sentencepiece
+'''

@@ -1,3 +1,0 @@
-# EE6405C22
-
-Repo for NLP EE 6405 group C22

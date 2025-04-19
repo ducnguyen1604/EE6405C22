@@ -22,20 +22,20 @@ export default function SearchPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (query) {
+    if (query && langs) {
       console.log(REMOVED_SECRETRunning useEffect with query:REMOVED_SECRET, query);
       const fetchProducts = async () => {
+        setIsLoading(true);
         try {
           const res = await fetch(
-            `http://127.0.0.1:8000/search?q=${encodeURIComponent(
-              query
-            )}&langs=${encodeURIComponent(langs)}`
+            `http://127.0.0.1:8000/search?q=${encodeURIComponent(query)}&langs=${encodeURIComponent(langs)}`
           );
 
           const data = await res.json();
           console.log(REMOVED_SECRETFetched data from backend:REMOVED_SECRET, data);
+
+          // suggestions is an array of [lang, translation]
           const translationEntries = Object.entries(data.translations || {});
-          console.log(REMOVED_SECRETParsed suggestions:REMOVED_SECRET, translationEntries);
           setSuggestions(translationEntries);
 
           setProducts(data.products || []);
@@ -43,17 +43,16 @@ export default function SearchPage() {
           console.error(REMOVED_SECRETFailed to fetch:REMOVED_SECRET, error);
           setProducts([]);
           setSuggestions([]);
+        } finally {
+          setIsLoading(false);
         }
-        setIsLoading(false);
       };
 
       fetchProducts();
     }
-  }, [query]);
+  }, [query, langs]);
 
-  const isNoResult =
-    !isLoading &&
-    (products.length === 0 || suggestions.includes(REMOVED_SECRETNo relevant resultREMOVED_SECRET));
+  const isNoResult = !isLoading && products.length === 0;
 
   return (
     <main className=REMOVED_SECRETcontent-under-header px-4 pb-10 flex flex-col items-center bg-white min-h-screenREMOVED_SECRET>
@@ -83,10 +82,12 @@ export default function SearchPage() {
           <div className=REMOVED_SECRETbg-white p-4 px-5 rounded shadow mt-6 mb-6 text-center w-full max-w-2xlREMOVED_SECRET>
             <p className=REMOVED_SECRETtext-sm text-gray-700 mb-1REMOVED_SECRET>We also searched for:</p>
             <ul className=REMOVED_SECRETflex flex-col sm:flex-row flex-wrap gap-2 text-sm justify-centerREMOVED_SECRET>
-              {Array.isArray(suggestions) && suggestions.length > 0 ? (
+              {suggestions.length > 0 ? (
                 suggestions.map(([lang, word], i) => (
                   <li key={i}>
-                    <span className=REMOVED_SECRETfont-medium text-blackREMOVED_SECRET>{lang}:</span>{REMOVED_SECRET REMOVED_SECRET}
+                    <span className=REMOVED_SECRETfont-medium text-black capitalizeREMOVED_SECRET>
+                      {lang}:
+                    </span>{REMOVED_SECRET REMOVED_SECRET}
                     <span className=REMOVED_SECRETtext-pink-600REMOVED_SECRET>{word}</span>
                   </li>
                 ))
