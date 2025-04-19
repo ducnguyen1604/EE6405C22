@@ -52,6 +52,22 @@ def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVE
     translations = {}
     matched = []
 
+    if not language_list:
+        # Simple English keyword search if no language specified
+        all_products = db.all()
+        for product in all_products:
+            title_en = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
+            desc_en = product.get(REMOVED_SECRETdescriptionREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
+            if q.lower() in title_en or q.lower() in desc_en:
+                matched.append(product)
+
+        translations[REMOVED_SECRETenglishREMOVED_SECRET] = q  # just echo the query
+        return {
+            REMOVED_SECRETtranslationsREMOVED_SECRET: translations,
+            REMOVED_SECRETproductsREMOVED_SECRET: matched
+        }
+
+    # Multilingual search (when language is specified)
     for lang in language_list:
         translated = translate(q, lang)
         translations[lang] = translated
@@ -62,8 +78,17 @@ def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVE
             results = search_spanish(q)
         elif lang == REMOVED_SECRETitalianREMOVED_SECRET:
             results = search_italian(q)
+        elif lang == REMOVED_SECRETenglishREMOVED_SECRET:
+            # optionally reuse basic search logic
+            all_products = db.all()
+            for product in all_products:
+                title_en = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
+                desc_en = product.get(REMOVED_SECRETdescriptionREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
+                if q.lower() in title_en or q.lower() in desc_en:
+                    matched.append(product)
+            continue
         else:
-            continue  # skip unsupported languages
+            continue
 
         for r in results:
             matched.append(r)
