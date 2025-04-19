@@ -13,11 +13,14 @@ def get_openai_client(env_path):
     # Initialize and return client
     return OpenAI(api_key=api_key, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
 
+import json
+import re
+
 def get_expanded_queries(user_query, env_path):
     # Initialize client
     client = get_openai_client(env_path)
     
-    prompt=f'''You are an expert search query optimizer. Your task is to expand the following e-commerce search query to improve retrieval of relevant products. Generate a list of semantically related terms, synonyms, and common user variations while preserving the original intent.
+    prompt = f'''You are an expert search query optimizer. Your task is to expand the following e-commerce search query to improve retrieval of relevant products. Generate a list of semantically related terms, synonyms, and common user variations while preserving the original intent.
 
 **Rules:**
 1. Prioritize **contextual relevance** (e.g., REMOVED_SECRETrunning shoesREMOVED_SECRET → REMOVED_SECRETjogging sneakersREMOVED_SECRET).
@@ -51,26 +54,37 @@ def get_expanded_queries(user_query, env_path):
 }}
 
 **Now process this query:** REMOVED_SECRET{user_query}REMOVED_SECRET'''
-    response = client.chat.completions.create(
-        model=REMOVED_SECRETdeepseek/deepseek-chat-v3-0324:freeREMOVED_SECRET,
-        messages=[
-            {REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETuserREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: prompt},
-        ],
-        temperature=0.3,
-    )
-    
-    expanded_queries_raw=response.choices[0].message.content
-    if not expanded_queries_raw or expanded_queries_raw.strip() == REMOVED_SECRETREMOVED_SECRET:
-      raise ValueError(REMOVED_SECRETAPI returned an empty responseREMOVED_SECRET)
-    expanded_queries_raw = re.search(r'```json\n({.*?})\n```', expanded_queries_raw, re.DOTALL)
-    if expanded_queries_raw:
-      expanded_queries_raw = expanded_queries_raw.group(1)
-    else:
-      expanded_queries_raw = expanded_queries_raw.strip()  # fallback to raw response
-      
-    #print(expanded_queries_raw)
-    expanded_queries=json.loads(expanded_queries_raw)
-    return expanded_queries
+
+    try:
+        response = client.chat.completions.create(
+            model=REMOVED_SECRETdeepseek/deepseek-chat-v3-0324:freeREMOVED_SECRET,
+            messages=[{REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETuserREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: prompt}],
+            temperature=0.3,
+        )
+        raw_response = response.choices[0].message.content
+
+        if not raw_response or raw_response.strip() == REMOVED_SECRETREMOVED_SECRET:
+            print(REMOVED_SECRET⚠️ Empty expansion response — using fallback.REMOVED_SECRET)
+            return [{REMOVED_SECRETtermREMOVED_SECRET: user_query, REMOVED_SECRETweightREMOVED_SECRET: 1.0}]
+
+        # Try to extract JSON inside markdown ```json ... ```
+        match = re.search(r'```json\n({.*?})\n```', raw_response, re.DOTALL)
+        if match:
+            json_string = match.group(1)
+        else:
+            # If not wrapped in triple-backtick, try parsing the whole response
+            json_string = raw_response.strip()
+
+        expanded = json.loads(json_string)
+        return expanded
+
+    except Exception as e:
+        print(fREMOVED_SECRET❌ Expansion failed due to error: {e}REMOVED_SECRET)
+        return {
+    REMOVED_SECREToriginal_queryREMOVED_SECRET: user_query,
+    REMOVED_SECRETexpanded_termsREMOVED_SECRET: [{REMOVED_SECRETtermREMOVED_SECRET: user_query, REMOVED_SECRETtypeREMOVED_SECRET: REMOVED_SECRETfallbackREMOVED_SECRET}]
+}
+
 
 
 #weight the different output types
