@@ -53,7 +53,7 @@ def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVE
     matched = []
 
     if not language_list:
-        # Simple English keyword search if no language specified
+        # Simple English keyword search
         all_products = db.all()
         for product in all_products:
             title_en = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
@@ -61,13 +61,12 @@ def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVE
             if q.lower() in title_en or q.lower() in desc_en:
                 matched.append(product)
 
-        translations[REMOVED_SECRETenglishREMOVED_SECRET] = q  # just echo the query
+        translations[REMOVED_SECRETenglishREMOVED_SECRET] = q
         return {
             REMOVED_SECRETtranslationsREMOVED_SECRET: translations,
             REMOVED_SECRETproductsREMOVED_SECRET: matched
         }
 
-    # Multilingual search (when language is specified)
     for lang in language_list:
         translated = translate(q, lang)
         translations[lang] = translated
@@ -79,7 +78,6 @@ def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVE
         elif lang == REMOVED_SECRETitalianREMOVED_SECRET:
             results = search_italian(q)
         elif lang == REMOVED_SECRETenglishREMOVED_SECRET:
-            # optionally reuse basic search logic
             all_products = db.all()
             for product in all_products:
                 title_en = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
@@ -90,13 +88,17 @@ def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVE
         else:
             continue
 
+        # 🧼 Unwrap { REMOVED_SECRETproductREMOVED_SECRET: ..., REMOVED_SECRETscoreREMOVED_SECRET: ... } structure
         for r in results:
-            matched.append(r)
+            product = r[REMOVED_SECRETproductREMOVED_SECRET]
+            product[REMOVED_SECRETscoreREMOVED_SECRET] = r.get(REMOVED_SECRETscoreREMOVED_SECRET, 0.0)  # Optional: attach score
+            matched.append(product)
 
     return {
         REMOVED_SECRETtranslationsREMOVED_SECRET: translations,
         REMOVED_SECRETproductsREMOVED_SECRET: matched
     }
+
 
 
 @app.get(REMOVED_SECRET/product/{id}REMOVED_SECRET, response_model=Product)
