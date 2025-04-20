@@ -1,6 +1,16 @@
 # EE6405C22
 
-Repo for NLP EE 6405 group C22
+## **Easy Shop: Easy Buy – Easy Go**  
+Repo for NLP EE6405 group C22  
+
+**Members:**  
+- Charran Senthil Kumar (Hybrid Retrieval)  
+- Cheryl Lynn Kosasih (Hybrid Retrieval)  
+- Liu Runlin (mBART)  
+- Nguyen Minh Duc (Demo Web App)  
+- Sanjay Aravin Murugan (MarianMT)
+
+---
 
 ## A. Run the Frontend (Next.js)
 
@@ -33,12 +43,12 @@ The backend is hosted at: [http://localhost:8000](http://localhost:8000)
 
 ---
 
-q
+## C. API Documentation
 
 ### 1. GET `/search`
 
 #### Query Parameters:
-- `q` (string): Search query (e.g., `REMOVED_SECRETbreadREMOVED_SECRET`)
+- `q` (string): Search query (e.g., `REMOVED_SECRETmouth sprayREMOVED_SECRET`)
 - `langs` (string, optional): Comma-separated list of languages, e.g., `REMOVED_SECRETChinese,SpanishREMOVED_SECRET`
 
 #### Example:
@@ -88,9 +98,22 @@ Returns the product details, or a 404 if not found.
 
 ---
 
-## D. Backend Models
+## D. Tech Stack Overview
 
-The implementation of our various backend models is located within the `notebook` directory.
+![System Design Diagram](./frontend/public/sysdes.png)
+
+🛠 **Tech Stack**  
+- **Frontend**: Next.js App Router  
+- **Backend**: FastAPI  
+- **Database**: TinyDB (`products.json`)  
+- **Languages Supported and Model Used**:  
+  - **Chinese** – mBART  
+  - **Spanish** – MarianMT  
+  - **Italian** – Hybrid Retrieval  
+(Note: Each of these model can be run in all other language. However, for learning purpose, each model is implemented for a language. Refer to part E For detail research and run the demo on these models)
+---
+
+## E. Backend Models
 
 ### Hybrid Retrieval (Semantic Search)
 
@@ -100,34 +123,41 @@ Featuring:
 - Hybrid Retrieval
 - Dynamic Alpha Tuning / LLM Reranking
 
-For detailed guide, please refer to 'Hybrid_Retrieval_Guide.md'
+For detailed guide, refer to `Hybrid_Retrieval_Guide.md`
+
+---
 
 ### Marian MT
 
 **Location**: `notebook/MarianMT`
 
-Featuring :
-- Hugging Marian MT model Hybrid retrieval using token and fuzzy matching 
+Featuring:
+- HuggingFace MarianMT model  
+- Hybrid retrieval using token and fuzzy matching  
 
-Algorithm: 
-- M3: Base version with multiple language translation M4:Loop initialized 
-- M5:Fine tuned with evaluation(Only Spanish)
-- M6:Deepseek OpenAI integration 
+**Algorithm Variants**:
+- M3: Base version with multilingual translation  
+- M4: Loop initialized  
+- M5: Fine-tuned with evaluation (Spanish)  
+- M6: DeepSeek & OpenAI integration  
 
-Use the requirement.txt to install relevant libraries
+> Use the `requirements.txt` to install relevant dependencies.
+
+---
 
 ### mBART
 
-**Location:** `notebook/MT/mBART/`
+**Location**: `notebook/MT/mBART/`
 
-An implementation of a pipeline featuring:
-
+Implementation includes:
 - Query expansion  
 - mBART translation  
 - Hybrid search  
 
-For detailed documentation, refer to `doc.ipynb` in the mBART folder. This notebook also contains the relevant evaluation metrics for this model.
+> For documentation, refer to `doc.ipynb` (includes evaluation metrics).  
+> **Note:** mBART model is large – download it from [Google Drive](https://drive.google.com/file/d/1mtvr1KcmOcw_8Pua-5OOqtou11ZypMu6/view?usp=sharing) and place it in `backend/mBART`.  
+> **Note:** DeepSeek (free version) has a rate limit tied to the API key.
 
-**Note:** Due to the size of the mBART model, please download it separately from [this link](https://drive.google.com/file/d/1mtvr1KcmOcw_8Pua-5OOqtou11ZypMu6/view?usp=sharing). Unzip this file and place it in the `mBART` folder.
+---
 
-**Note:** As we are using the free version of deepseek, there is a rate limit tied to the api key. 
+Let me know if you want to add badges (e.g., tech used, license, or demo) or a section for demo screenshots!
