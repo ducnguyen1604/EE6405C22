@@ -21,6 +21,11 @@ npm run dev
 
 The UI is hosted at: [http://localhost:3000](http://localhost:3000)
 
+Notes: 
+- The backend might take a while to run, so do not try to press REMOVED_SECRETSearchREMOVED_SECRET button continuosly.
+- To perform search for another product effectively, user should go back to the main page (by clicking the E-Shop icon at the top left), enter the query and select the language.
+-  Images are used as a placehoders. Some products do not have images.
+
 ---
 
 ## B. Run the Backend (FastAPI)
