@@ -1,20 +1,23 @@
-REMOVED_SECRETuse clientREMOVED_SECRET;
-
-import { useRouter, usePathname } from REMOVED_SECRETnext/navigationREMOVED_SECRET;
+import { useRouter } from REMOVED_SECRETnext/navigationREMOVED_SECRET;
 import { useState, useEffect } from REMOVED_SECRETreactREMOVED_SECRET;
 
 export default function SearchBar({ initialValue = REMOVED_SECRETREMOVED_SECRET, languages = [] }) {
   const [query, setQuery] = useState(initialValue);
+  const [langs, setLangs] = useState(languages);
   const router = useRouter();
 
   useEffect(() => {
     setQuery(initialValue);
   }, [initialValue]);
 
+  useEffect(() => {
+    setLangs(languages);
+  }, [languages]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim() !== REMOVED_SECRETREMOVED_SECRET) {
-      const langParam = languages.length > 0 ? `&langs=${languages.join(REMOVED_SECRET,REMOVED_SECRET)}` : REMOVED_SECRETREMOVED_SECRET;
+      const langParam = langs.length > 0 ? `&langs=${langs.join(REMOVED_SECRET,REMOVED_SECRET)}` : REMOVED_SECRETREMOVED_SECRET;
       router.push(`/search?q=${encodeURIComponent(query)}${langParam}`);
     }
   };

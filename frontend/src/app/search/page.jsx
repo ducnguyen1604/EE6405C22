@@ -83,7 +83,8 @@ export default function SearchPage() {
         Search Results from multilanguages 🌎
       </h1>
 
-      <SearchBar initialValue={query} />
+      <SearchBar initialValue={query} languages={selectedLangs} />
+
 
       <div className=REMOVED_SECRETmt-4 text-gray-700 text-md font-mediumREMOVED_SECRET>
         You also want to search in:
@@ -93,17 +94,19 @@ export default function SearchPage() {
           const isSelected = selectedLangs.includes(lang.name);
           return (
             <button
-              key={lang.name}
-              onClick={() => toggleLang(lang.name)}
-              className={`px-4 py-2 rounded-full border-2 font-medium transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ${
-                isSelected
-                  ? REMOVED_SECRETtext-white bg-pink-500 border-pink-500REMOVED_SECRET
-                  : REMOVED_SECRETtext-gray-700 bg-whiteREMOVED_SECRET
-              }`}
-              style={{ borderColor: lang.color }}
-            >
-              {lang.name}
-            </button>
+            type=REMOVED_SECRETbuttonREMOVED_SECRET  // 👈 Add this line
+            key={lang.name}
+            onClick={() => toggleLang(lang.name)}
+            className={`px-4 py-2 rounded-full border-2 font-medium transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ${
+              isSelected
+                ? REMOVED_SECRETtext-white bg-pink-500 border-pink-500REMOVED_SECRET
+                : REMOVED_SECRETtext-gray-700 bg-whiteREMOVED_SECRET
+            }`}
+            style={{ borderColor: lang.color }}
+          >
+            {lang.name}
+          </button>
+          
           );
         })}
       </div>
