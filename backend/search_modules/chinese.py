@@ -1,7 +1,7 @@
 from tinydb import TinyDB, Query
 from mBART.run_cn_pipeline import run_chinese_query
 
-def search_chinese_backend(query, top_k=5):
+def search_chinese(query, top_k=5):
     # 1. Run pipeline and get {product_name_zh: score}
     ranked_names = run_chinese_query(query)
 

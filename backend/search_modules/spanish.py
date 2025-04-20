@@ -1,7 +1,7 @@
 from tinydb import TinyDB, Query
 from mBART.run_es_pipeline import run_spanish_query
 
-def search_spanish_backend(query, top_k=5):
+def search_spanish(query, top_k=5):
     # 1. Run pipeline and get {product_name_zh: score}
     ranked_names = run_spanish_query(query)
 

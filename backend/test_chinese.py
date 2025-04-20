@@ -1,4 +1,4 @@
-from search_modules.chinese import search_chinese_backend
+from search_modules.chinese import search_chinese
 
 def print_results(results):
     print(REMOVED_SECRET\n🧪 Raw Output Structure:REMOVED_SECRET)
@@ -31,5 +31,5 @@ def print_results(results):
 if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
     print(REMOVED_SECRET💡 Example queries: 短袖, 裙子, 牛仔裤REMOVED_SECRET)
     query = input(REMOVED_SECRET🔍 Enter a Chinese product search query: REMOVED_SECRET)
-    results = search_chinese_backend(query)
+    results = search_chinese(query)
     print_results(results)

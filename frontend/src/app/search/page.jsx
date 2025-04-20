@@ -99,7 +99,7 @@ export default function SearchPage() {
 
           <div className=REMOVED_SECRETgrid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-fullREMOVED_SECRET>
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} langs={langs} />
             ))}
           </div>
         </>

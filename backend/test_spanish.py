@@ -1,4 +1,4 @@
-from search_modules.spanish import search_spanish_backend
+from search_modules.spanish import search_spanish
 
 def print_results(results):
     print(REMOVED_SECRET\n🧪 Raw Output Structure:REMOVED_SECRET)
@@ -30,5 +30,5 @@ def print_results(results):
 
 if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
     query = input(REMOVED_SECRET🔍 Enter a Spanish product search query: REMOVED_SECRET)
-    results = search_spanish_backend(query)
+    results = search_spanish(query)
     print_results(results)
