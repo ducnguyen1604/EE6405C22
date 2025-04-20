@@ -219,16 +219,33 @@ def calculate_bertscore(candidate, reference, lang = REMOVED_SECRETenREMOVED_SEC
     return P.item(), R.item(), F1.item()
 
 
-def get_final_output(query, hybrid_top_id, data, tgt_lang='cn'):
-    final_output={}
-    for ids in hybrid_top_id:
-        if tgt_lang=='cn':
-            txt=data[tgt_lang]['chinese translation'][ids]
-        elif tgt_lang=='es':
-            txt=data[tgt_lang]['title_spanish'][ids]
-        elif tgt_lang=='it':
-            txt=data[tgt_lang]['title_italian'][ids]
+def get_final_output(query, hybrid_top_id, data, tgt_lang='cn',debug=False):
+    if debug:
+        tgt_results = []
+        english_results = []
+        for ids in hybrid_top_id:
+            if tgt_lang=='cn':
+                tgt_results.append(data[tgt_lang]['chinese translation'][ids])
+                english_results.append(data[tgt_lang]['title'][ids])
+            elif tgt_lang=='es':
+                tgt_results.append(data[tgt_lang]['title_spanish'][ids])
+                english_results.append(data[tgt_lang]['title'][ids])
+            elif tgt_lang=='it':
+                tgt_results.append(data[tgt_lang]['title_italian'][ids])
+                english_results.append(data[tgt_lang]['title'][ids])
+        result_df=pd.DataFrame({'en':english_results, 'tgt':tgt_results})
+        return result_df
 
-        acc, precision, f1 = calculate_bertscore(txt, query)
-        final_output[txt]=f1
-    return final_output
+    else:
+        final_output={}
+        for ids in hybrid_top_id:
+            if tgt_lang=='cn':
+                txt=data[tgt_lang]['chinese translation'][ids]
+            elif tgt_lang=='es':
+                txt=data[tgt_lang]['title_spanish'][ids]
+            elif tgt_lang=='it':
+                txt=data[tgt_lang]['title_italian'][ids]
+
+            acc, precision, f1 = calculate_bertscore(txt, query)
+            final_output[txt]=f1
+        return final_output

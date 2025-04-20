@@ -33,7 +33,7 @@ The backend is hosted at: [http://localhost:8000](http://localhost:8000)
 
 ---
 
-## C. API Endpoints
+q
 
 ### 1. GET `/search`
 
@@ -85,3 +85,33 @@ GET /product/1
 ```
 
 Returns the product details, or a 404 if not found.
+
+---
+
+## D. Backend Models
+
+The implementation of our various backend models is located within the `notebook` directory.
+
+### Hybrid Retrieval (Semantic Search)
+
+*Coming soon or to be documented.*
+
+### Marian MT
+
+*Coming soon or to be documented.*
+
+### mBART
+
+**Location:** `notebook/MT/mBART/`
+
+An implementation of a pipeline featuring:
+
+- Query expansion  
+- mBART translation  
+- Hybrid search  
+
+For detailed documentation, refer to `doc.ipynb` in the mBART folder. This notebook also contains the relevant evaluation metrics for this model.
+
+**Note:** Due to the size of the mBART model, please download it separately from [this link](https://drive.google.com/file/d/1mtvr1KcmOcw_8Pua-5OOqtou11ZypMu6/view?usp=sharing). Unzip this file and place it in the `mBART` folder.
+
+**Note:** As we are using the free version of deepseek, there is a rate limit tied to the api key. 

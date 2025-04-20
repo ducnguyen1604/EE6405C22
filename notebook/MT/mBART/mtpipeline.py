@@ -14,7 +14,7 @@ def init_mt_environment(mBART_model_path, data_paths, embed_model, env_path):
 
 #wrapper for easy calling
 
-def mt_pipeline_search(query, env_path, mBART_model, mBART_tokenizer, data, bm25_corpus, pinecone_indices, dense_embed_model, tgt_lang='cn' , top_k=5):
+def mt_pipeline_search(query, env_path, mBART_model, mBART_tokenizer, data, bm25_corpus, pinecone_indices, dense_embed_model, tgt_lang='cn' , top_k=5, debug=False):
 
     print('Expanding queries...')
     expanded_queries=expand(query, env_path, include_translations=False)
@@ -25,6 +25,6 @@ def mt_pipeline_search(query, env_path, mBART_model, mBART_tokenizer, data, bm25
     print('Searching...')
     hybrid_top_id, hybrid_top_scores=hybrid_expanded_search(weighted_queries, bm25_corpus, pinecone_indices, dense_embed_model, env_path, tgt_lang=tgt_lang, top_k=top_k )
     print('Processing Output...')
-    final_output = get_final_output(query, hybrid_top_id, data, tgt_lang=tgt_lang)
+    final_output = get_final_output(query, hybrid_top_id, data, tgt_lang=tgt_lang, debug=debug)
 
     return final_output
