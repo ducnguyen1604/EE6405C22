@@ -41,6 +41,7 @@ pip install -r requirements.txt
 3. Start the backend server:
 
 ```bash
+cd backend
 uvicorn main:app --reload
 ```
 
@@ -165,4 +166,3 @@ Implementation includes:
 
 ---
 
-Let me know if you want to add badges (e.g., tech used, license, or demo) or a section for demo screenshots!
