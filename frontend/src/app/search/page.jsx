@@ -17,7 +17,7 @@ export default function SearchPage() {
   const router = useRouter();
   const [query, setQuery] = useState(REMOVED_SECRETREMOVED_SECRET);
   const [langs, setLangs] = useState(REMOVED_SECRETREMOVED_SECRET);
-  const [selectedLangs, setSelectedLangs] = useState([REMOVED_SECRETEnglishREMOVED_SECRET]);
+  const [selectedLangs, setSelectedLangs] = useState([REMOVED_SECRETREMOVED_SECRET]);
   const [products, setProducts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
