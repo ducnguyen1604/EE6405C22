@@ -94,7 +94,13 @@ The implementation of our various backend models is located within the `notebook
 
 ### Hybrid Retrieval (Semantic Search)
 
-*Coming soon or to be documented.*
+**Location**: `notebook/hybrid retrieval + dynamic alpha`
+
+Featuring:
+- Hybrid Retrieval
+- Dynamic Alpha Tuning / LLM Reranking
+
+For detailed guide, please refer to 'Hybrid_Retrieval_Guide.md'
 
 ### Marian MT
 
