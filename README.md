@@ -104,7 +104,17 @@ For detailed guide, please refer to 'Hybrid_Retrieval_Guide.md'
 
 ### Marian MT
 
-*Coming soon or to be documented.*
+**Location**: `notebook/MarianMT`
+
+Featuring :
+- Hugging Marian MT model Hybrid retrieval using token and fuzzy matching 
+
+Algorithm: 
+- M3: Base version with multiple language translation M4:Loop initialized 
+- M5:Fine tuned with evaluation(Only Spanish)
+- M6:Deepseek OpenAI integration 
+
+Use the requirement.txt to install relevant libraries
 
 ### mBART
 
