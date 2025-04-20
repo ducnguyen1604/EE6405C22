@@ -5,26 +5,28 @@ import Link from REMOVED_SECRETnext/linkREMOVED_SECRET;
 export default function ProductCard({ product, langs }) {
   const actualProduct = product; // ✅ Handle both flat & nested
   const langList = langs?.split(REMOVED_SECRET,REMOVED_SECRET).map((l) => l.trim().toLowerCase()) || [];
-  console.log(actualProduct)
-  console.log(langList)
-  let name = REMOVED_SECRETUnnamedREMOVED_SECRET;
-  let description = REMOVED_SECRETNo descriptionREMOVED_SECRET;
+  // console.log(actualProduct)
+  // console.log(langList)
+  let name = actualProduct.name?.en || REMOVED_SECRETUnnamedREMOVED_SECRET;
+  let description = actualProduct.description?.en || REMOVED_SECRETNo descriptionREMOVED_SECRET;
 
-  // Default to English
-  name = actualProduct.name?.en || name;
-  description = actualProduct.description?.en || description;
-
-  // If a preferred language is specified AND exists, override
-  if (langList.includes(REMOVED_SECRETchineseREMOVED_SECRET)) {
-    name = actualProduct.name.zh;
-    console.log('it works')
-    description = actualProduct.description?.zh || description;
-  } else if (langList.includes(REMOVED_SECRETspanishREMOVED_SECRET) && actualProduct.name?.es) {
-    name = actualProduct.name.es;
-    description = actualProduct.description?.es || description;
-  } else if (langList.includes(REMOVED_SECRETitalianREMOVED_SECRET) && actualProduct.name?.it) {
-    name = actualProduct.name.it;
-    description = actualProduct.description?.it || description;
+  // Prioritize selected languages (in order) if available
+  for (const lang of langList) {
+    if (lang === REMOVED_SECRETchineseREMOVED_SECRET && actualProduct.name?.zh) {
+      name = actualProduct.name.zh;
+      description = actualProduct.description?.zh || description;
+      break;
+    }
+    if (lang === REMOVED_SECRETspanishREMOVED_SECRET && actualProduct.name?.es) {
+      name = actualProduct.name.es;
+      description = actualProduct.description?.es || description;
+      break;
+    }
+    if (lang === REMOVED_SECRETitalianREMOVED_SECRET && actualProduct.name?.it) {
+      name = actualProduct.name.it;
+      description = actualProduct.description?.it || description;
+      break;
+    }
   }
 
   const image = actualProduct.image || REMOVED_SECRET/images/products/default.jpgREMOVED_SECRET;

@@ -4,12 +4,7 @@ import { useRouter, usePathname } from REMOVED_SECRETnext/navigationREMOVED_SECR
 import { useState, useEffect } from REMOVED_SECRETreactREMOVED_SECRET;
 import SearchBar from REMOVED_SECRET@/components/SearchBarREMOVED_SECRET;
 
-const suggestions = [
-  REMOVED_SECRETMouth SprayREMOVED_SECRET,
-  REMOVED_SECRET口腔喷雾REMOVED_SECRET,
-  REMOVED_SECRETaerosol bucalREMOVED_SECRET,
-  REMOVED_SECRETspray oraleREMOVED_SECRET,
-];
+const suggestions = [REMOVED_SECRETMouth SprayREMOVED_SECRET, REMOVED_SECRET口腔喷雾REMOVED_SECRET, REMOVED_SECRETaerosol bucalREMOVED_SECRET, REMOVED_SECRETspray oraleREMOVED_SECRET];
 
 const languages = [
   { name: REMOVED_SECRETEnglishREMOVED_SECRET, color: REMOVED_SECRET#c026d3REMOVED_SECRET },
@@ -24,41 +19,49 @@ export default function SearchSection() {
   const [index, setIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [selectedLangs, setSelectedLangs] = useState([]);
+  const [selectedLangs, setSelectedLangs] = useState([REMOVED_SECRETEnglishREMOVED_SECRET]);
 
   const router = useRouter();
   const path = usePathname();
 
   useEffect(() => {
     const current = suggestions[index];
-    const timeout = setTimeout(() => {
-      if (isDeleting) {
-        if (charIndex > 0) {
-          setCharIndex((prev) => prev - 1);
-          setDisplayText(current.substring(0, charIndex - 1));
+    const timeout = setTimeout(
+      () => {
+        if (isDeleting) {
+          if (charIndex > 0) {
+            setCharIndex((prev) => prev - 1);
+            setDisplayText(current.substring(0, charIndex - 1));
+          } else {
+            setIsDeleting(false);
+            setIndex((prev) => (prev + 1) % suggestions.length);
+          }
         } else {
-          setIsDeleting(false);
-          setIndex((prev) => (prev + 1) % suggestions.length);
+          if (charIndex < current.length) {
+            setCharIndex((prev) => prev + 1);
+            setDisplayText(current.substring(0, charIndex + 1));
+          } else {
+            setTimeout(() => setIsDeleting(true), 2000);
+          }
         }
-      } else {
-        if (charIndex < current.length) {
-          setCharIndex((prev) => prev + 1);
-          setDisplayText(current.substring(0, charIndex + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      }
-    }, isDeleting ? 50 : 120);
+      },
+      isDeleting ? 50 : 120
+    );
 
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, index]);
 
   const toggleLang = (lang) => {
-    setSelectedLangs((prev) =>
-      prev.includes(lang)
+    setSelectedLangs((prev) => {
+      // If trying to deselect the last remaining language, prevent it
+      if (prev.includes(lang) && prev.length === 1) {
+        return prev; // Don't allow removing the last language
+      }
+      // Normal toggle behavior
+      return prev.includes(lang)
         ? prev.filter((l) => l !== lang)
-        : [...prev, lang]
-    );
+        : [...prev, lang];
+    });
   };
 
   return (
@@ -83,7 +86,7 @@ export default function SearchSection() {
         )}
 
         {/* Reusable search bar */}
-        <SearchBar className=REMOVED_SECRETmx-autoREMOVED_SECRET languages={selectedLangs}/>
+        <SearchBar className=REMOVED_SECRETmx-autoREMOVED_SECRET languages={selectedLangs} />
 
         {/* Language options */}
         <div className=REMOVED_SECRETmt-6 text-gray-700 text-lg font-mediumREMOVED_SECRET>
@@ -110,6 +113,9 @@ export default function SearchSection() {
             );
           })}
         </div>
+        <p className=REMOVED_SECRETtext-sm text-gray-500 mt-2 italicREMOVED_SECRET>
+          At least one language must be selected (default: English)
+        </p>
       </div>
 
       <style jsx>{`
