@@ -28,7 +28,9 @@ export default function SearchPage() {
         setIsLoading(true);
         try {
           const res = await fetch(
-            `http://127.0.0.1:8000/search?q=${encodeURIComponent(query)}&langs=${encodeURIComponent(langs)}`
+            `http://127.0.0.1:8000/search?q=${encodeURIComponent(
+              query
+            )}&langs=${encodeURIComponent(langs)}`
           );
 
           const data = await res.json();
@@ -83,14 +85,22 @@ export default function SearchPage() {
             <p className=REMOVED_SECRETtext-sm text-gray-700 mb-1REMOVED_SECRET>We also searched for:</p>
             <ul className=REMOVED_SECRETflex flex-col sm:flex-row flex-wrap gap-2 text-sm justify-centerREMOVED_SECRET>
               {suggestions.length > 0 ? (
-                suggestions.map(([lang, word], i) => (
-                  <li key={i}>
-                    <span className=REMOVED_SECRETfont-medium text-black capitalizeREMOVED_SECRET>
-                      {lang}:
-                    </span>{REMOVED_SECRET REMOVED_SECRET}
-                    <span className=REMOVED_SECRETtext-pink-600REMOVED_SECRET>{word}</span>
-                  </li>
-                ))
+                suggestions.map(([lang, word], i) => {
+                  // 🛠️ Handle case where word is a nested object
+                  const displayText =
+                    typeof word === REMOVED_SECRETobjectREMOVED_SECRET && word !== null
+                      ? Object.values(word)[0]
+                      : word;
+
+                  return (
+                    <li key={i}>
+                      <span className=REMOVED_SECRETfont-medium text-black capitalizeREMOVED_SECRET>
+                        {lang}:
+                      </span>{REMOVED_SECRET REMOVED_SECRET}
+                      <span className=REMOVED_SECRETtext-pink-600REMOVED_SECRET>{displayText}</span>
+                    </li>
+                  );
+                })
               ) : (
                 <li className=REMOVED_SECRETtext-gray-400REMOVED_SECRET>No suggestions available</li>
               )}

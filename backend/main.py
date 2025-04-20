@@ -9,6 +9,10 @@ from search_modules.chinese import search_chinese
 from search_modules.italian import search_italian
 from search_modules.spanish import search_spanish
 
+from translation_module.cn_trans import translate_to_chinese
+from translation_module.es_trans import translate_to_spanish
+from translation_module.it_trans import translate_to_italian
+
 # Optional: fallback translation API
 import requests
 
@@ -21,35 +25,31 @@ app.add_middleware(
     allow_headers=[REMOVED_SECRET*REMOVED_SECRET],
 )
 
-# Unified translate function using LibreTranslate
-def translate(query: str, target_lang: str) -> str:
+#translation part
+def translate(query: str, target_langs_str: str) -> Dict[str, str]:
     lang_map = {
-        REMOVED_SECRETchineseREMOVED_SECRET: REMOVED_SECRETzhREMOVED_SECRET,
-        REMOVED_SECRETitalianREMOVED_SECRET: REMOVED_SECRETitREMOVED_SECRET,
-        REMOVED_SECRETspanishREMOVED_SECRET: REMOVED_SECRETesREMOVED_SECRET
+        REMOVED_SECRETchineseREMOVED_SECRET: translate_to_chinese,
+        REMOVED_SECRETitalianREMOVED_SECRET: translate_to_italian,
+        REMOVED_SECRETspanishREMOVED_SECRET: translate_to_spanish,
+        REMOVED_SECRETenglishREMOVED_SECRET: lambda x: x
     }
-    if target_lang.lower() not in lang_map:
-        return query
 
-    '''
-    target_code = lang_map[target_lang.lower()]
-    response = requests.post(
-        REMOVED_SECREThttps://libretranslate.de/translateREMOVED_SECRET,
-        headers={REMOVED_SECRETContent-TypeREMOVED_SECRET: REMOVED_SECRETapplication/jsonREMOVED_SECRET},
-        json={
-            REMOVED_SECRETqREMOVED_SECRET: query,
-            REMOVED_SECRETsourceREMOVED_SECRET: REMOVED_SECRETenREMOVED_SECRET,  # assuming user inputs in English
-            REMOVED_SECRETtargetREMOVED_SECRET: target_code,
-            REMOVED_SECRETformatREMOVED_SECRET: REMOVED_SECRETtextREMOVED_SECRET
-        }
-    )
-    return response.json().get(REMOVED_SECRETtranslatedTextREMOVED_SECRET, query)
-    '''
+    target_langs = [lang.strip().lower() for lang in target_langs_str.split(REMOVED_SECRET,REMOVED_SECRET) if lang.strip()]
+    translations = {}
+
+    for lang in target_langs:
+        if lang in lang_map:
+            translations[lang] = lang_map[lang](query)
+
+    return translations
+
+
+
 
 @app.get(REMOVED_SECRET/searchREMOVED_SECRET)
 def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVED_SECRET)):
     language_list = [lang.strip().lower() for lang in langs.split(REMOVED_SECRET,REMOVED_SECRET) if lang.strip()]
-    translations = {}
+    translations = translate(q, langs)
     matched = []
 
     if not language_list:
