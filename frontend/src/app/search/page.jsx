@@ -107,10 +107,12 @@ export default function SearchPage() {
             </ul>
           </div>
 
-          <div className=REMOVED_SECRETgrid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-fullREMOVED_SECRET>
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} langs={langs} />
-            ))}
+          <div className=REMOVED_SECRETw-full flex justify-centerREMOVED_SECRET>
+            <div className=REMOVED_SECRETw-full max-w-screen-xl px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4REMOVED_SECRET>
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} langs={langs} />
+              ))}
+            </div>
           </div>
         </>
       ) : (
