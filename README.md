@@ -27,6 +27,27 @@ Notes:
 - To perform search for another product effectively, user should go back to the main page (by clicking the E-Shop icon at the top left), enter the query and select the language.
 -  Images are used as a placehoders. Some products do not have images.
 
+### **UI Samples:**
+
+1. **Homepage**
+
+![System Design Diagram](./frontend/public/Main.png)
+
+2. **Search Page while Loading:**
+
+![System Design Diagram](./frontend/public/loading.png)
+
+3. **Search Results:**
+
+![System Design Diagram](./frontend/public/search1.png)
+
+![System Design Diagram](./frontend/public/search2.png)
+
+4. **View Product Info:**
+
+![System Design Diagram](./frontend/public/info.png)
+
+
 ---
 
 ## B. Run the Backend (FastAPI)
