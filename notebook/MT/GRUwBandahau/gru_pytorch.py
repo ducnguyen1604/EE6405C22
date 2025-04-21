@@ -36,7 +36,7 @@ class Decoder(nn.Module):
         self.V = nn.Linear(dec_units, 1)
         
     def forward(self, x, hidden, enc_output):
-        REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+        """
         Forward pass for the decoder
         
         Args:
@@ -48,7 +48,7 @@ class Decoder(nn.Module):
             x: Output tensor of shape (batch_size, vocab_size)
             state: Updated hidden state
             attention_weights: Attention weights for visualization
-        REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+        """
         # x shape: (batch_size, 1)
         # hidden shape: (1, batch_size, dec_units)
         # enc_output shape: (batch_size, max_length, enc_units)

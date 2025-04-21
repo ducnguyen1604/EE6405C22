@@ -5,7 +5,7 @@ import json
 from gru_pytorch import EncoderDecoder
 
 def load_model(model_path, device):
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """
     Load a trained model from a checkpoint file
     
     Args:
@@ -16,7 +16,7 @@ def load_model(model_path, device):
         model: Loaded model
         source_vocab: Source vocabulary
         target_vocab: Target vocabulary
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """
     # Load checkpoint
     checkpoint = torch.load(model_path, map_location=device)
     
@@ -52,7 +52,7 @@ def load_model(model_path, device):
     return model, source_vocab, target_vocab, source_reverse_vocab, target_reverse_vocab
 
 def tokenize(text, vocab, max_length=None):
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """
     Tokenize text into token IDs
     
     Args:
@@ -62,7 +62,7 @@ def tokenize(text, vocab, max_length=None):
         
     Returns:
         token_ids: List of token IDs
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """
     # Split text into tokens
     tokens = text.split()
     
@@ -76,7 +76,7 @@ def tokenize(text, vocab, max_length=None):
     return token_ids
 
 def detokenize(token_ids, reverse_vocab):
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """
     Convert token IDs back to text
     
     Args:
@@ -85,7 +85,7 @@ def detokenize(token_ids, reverse_vocab):
         
     Returns:
         text: Decoded text
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """
     # Convert IDs to tokens
     tokens = [reverse_vocab.get(id, '<unk>') for id in token_ids]
     
@@ -95,7 +95,7 @@ def detokenize(token_ids, reverse_vocab):
     return text
 
 def translate(model, text, source_vocab, target_reverse_vocab, device, max_length=None):
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """
     Translate text using the model
     
     Args:
@@ -109,7 +109,7 @@ def translate(model, text, source_vocab, target_reverse_vocab, device, max_lengt
     Returns:
         translation: Translated text
         attention_weights: Attention weights for visualization
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """
     # Tokenize input text
     token_ids = tokenize(text, source_vocab, max_length)
     
@@ -136,28 +136,28 @@ def translate(model, text, source_vocab, target_reverse_vocab, device, max_lengt
 def main(args):
     # Set device
     device = torch.device('cuda' if torch.cuda.is_available() and not args.no_cuda else 'cpu')
-    print(fREMOVED_SECRETUsing device: {device}REMOVED_SECRET)
+    print(f"Using device: {device}")
     
     # Load model and vocabularies
-    print(fREMOVED_SECRETLoading model from {args.model_path}...REMOVED_SECRET)
+    print(f"Loading model from {args.model_path}...")
     model, source_vocab, target_vocab, source_reverse_vocab, target_reverse_vocab = load_model(args.model_path, device)
     
     # Interactive translation
     if args.interactive:
-        print(REMOVED_SECRETEnter text to translate (or 'quit' to exit):REMOVED_SECRET)
+        print("Enter text to translate (or 'quit' to exit):")
         while True:
-            text = input(REMOVED_SECRET> REMOVED_SECRET)
+            text = input("> ")
             if text.lower() == 'quit':
                 break
             
             # Translate
             translation, _ = translate(model, text, source_vocab, target_reverse_vocab, device)
-            print(fREMOVED_SECRETTranslation: {translation}REMOVED_SECRET)
+            print(f"Translation: {translation}")
             print()
     
     # Translate from file
     elif args.input_file:
-        print(fREMOVED_SECRETTranslating from file {args.input_file}...REMOVED_SECRET)
+        print(f"Translating from file {args.input_file}...")
         with open(args.input_file, 'r', encoding='utf-8') as f:
             input_texts = [line.strip() for line in f.readlines()]
         
@@ -170,21 +170,21 @@ def main(args):
         if args.output_file:
             with open(args.output_file, 'w', encoding='utf-8') as f:
                 for translation in translations:
-                    f.write(fREMOVED_SECRET{translation}\nREMOVED_SECRET)
-            print(fREMOVED_SECRETTranslations saved to {args.output_file}REMOVED_SECRET)
+                    f.write(f"{translation}\n")
+            print(f"Translations saved to {args.output_file}")
         else:
             for i, (text, translation) in enumerate(zip(input_texts, translations)):
-                print(fREMOVED_SECRETInput {i+1}: {text}REMOVED_SECRET)
-                print(fREMOVED_SECRETTranslation {i+1}: {translation}REMOVED_SECRET)
+                print(f"Input {i+1}: {text}")
+                print(f"Translation {i+1}: {translation}")
                 print()
     
     # Single text translation
     else:
-        print(fREMOVED_SECRETTranslating: {args.text}REMOVED_SECRET)
+        print(f"Translating: {args.text}")
         translation, _ = translate(model, args.text, source_vocab, target_reverse_vocab, device)
-        print(fREMOVED_SECRETTranslation: {translation}REMOVED_SECRET)
+        print(f"Translation: {translation}")
 
-if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Translate text using a trained GRU-based encoder-decoder model')
     
     # Model arguments
@@ -203,6 +203,6 @@ if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
     
     # Check that at least one input method is specified
     if not args.text and not args.input_file and not args.interactive:
-        parser.error(REMOVED_SECRETAt least one of --text, --input_file, or --interactive must be specifiedREMOVED_SECRET)
+        parser.error("At least one of --text, --input_file, or --interactive must be specified")
     
     main(args) 

@@ -20,21 +20,21 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[REMOVED_SECRET*REMOVED_SECRET],
-    allow_methods=[REMOVED_SECRET*REMOVED_SECRET],
-    allow_headers=[REMOVED_SECRET*REMOVED_SECRET],
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 #translation part
 def translate(query: str, target_langs_str: str) -> Dict[str, str]:
     lang_map = {
-        REMOVED_SECRETchineseREMOVED_SECRET: translate_to_chinese,
-        REMOVED_SECRETitalianREMOVED_SECRET: translate_to_italian,
-        REMOVED_SECRETspanishREMOVED_SECRET: translate_to_spanish,
-        REMOVED_SECRETenglishREMOVED_SECRET: lambda x: x
+        "chinese": translate_to_chinese,
+        "italian": translate_to_italian,
+        "spanish": translate_to_spanish,
+        "english": lambda x: x
     }
 
-    target_langs = [lang.strip().lower() for lang in target_langs_str.split(REMOVED_SECRET,REMOVED_SECRET) if lang.strip()]
+    target_langs = [lang.strip().lower() for lang in target_langs_str.split(",") if lang.strip()]
     translations = {}
 
     for lang in target_langs:
@@ -46,9 +46,9 @@ def translate(query: str, target_langs_str: str) -> Dict[str, str]:
 
 
 
-@app.get(REMOVED_SECRET/searchREMOVED_SECRET)
-def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVED_SECRET)):
-    language_list = [lang.strip().lower() for lang in langs.split(REMOVED_SECRET,REMOVED_SECRET) if lang.strip()]
+@app.get("/search")
+def search_products(q: str = Query(...), langs: str = Query("")):
+    language_list = [lang.strip().lower() for lang in langs.split(",") if lang.strip()]
     translations = translate(q, langs)
     matched = []
 
@@ -56,55 +56,55 @@ def search_products(q: str = Query(...), langs: str = Query(REMOVED_SECRETREMOVE
         # Simple English keyword search
         all_products = db.all()
         for product in all_products:
-            title_en = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
-            desc_en = product.get(REMOVED_SECRETdescriptionREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
+            title_en = product.get("name", {}).get("en", "").lower()
+            desc_en = product.get("description", {}).get("en", "").lower()
             if q.lower() in title_en or q.lower() in desc_en:
                 matched.append(product)
 
-        translations[REMOVED_SECRETenglishREMOVED_SECRET] = q
+        translations["english"] = q
         return {
-            REMOVED_SECRETtranslationsREMOVED_SECRET: translations,
-            REMOVED_SECRETproductsREMOVED_SECRET: matched
+            "translations": translations,
+            "products": matched
         }
 
     for lang in language_list:
         translated = translate(q, lang)
         translations[lang] = translated
 
-        if lang == REMOVED_SECRETchineseREMOVED_SECRET:
+        if lang == "chinese":
             results = search_chinese(q)
-        elif lang == REMOVED_SECRETspanishREMOVED_SECRET:
+        elif lang == "spanish":
             results = search_spanish(q)
-        elif lang == REMOVED_SECRETitalianREMOVED_SECRET:
+        elif lang == "italian":
             results = search_italian(q)
-        elif lang == REMOVED_SECRETenglishREMOVED_SECRET:
+        elif lang == "english":
             all_products = db.all()
             for product in all_products:
-                title_en = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
-                desc_en = product.get(REMOVED_SECRETdescriptionREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET).lower()
+                title_en = product.get("name", {}).get("en", "").lower()
+                desc_en = product.get("description", {}).get("en", "").lower()
                 if q.lower() in title_en or q.lower() in desc_en:
                     matched.append(product)
             continue
         else:
             continue
 
-        # 🧼 Unwrap { REMOVED_SECRETproductREMOVED_SECRET: ..., REMOVED_SECRETscoreREMOVED_SECRET: ... } structure
+        # 🧼 Unwrap { "product": ..., "score": ... } structure
         for r in results:
-            product = r[REMOVED_SECRETproductREMOVED_SECRET]
-            product[REMOVED_SECRETscoreREMOVED_SECRET] = r.get(REMOVED_SECRETscoreREMOVED_SECRET, 0.0)  # Optional: attach score
+            product = r["product"]
+            product["score"] = r.get("score", 0.0)  # Optional: attach score
             matched.append(product)
 
     return {
-        REMOVED_SECRETtranslationsREMOVED_SECRET: translations,
-        REMOVED_SECRETproductsREMOVED_SECRET: matched
+        "translations": translations,
+        "products": matched
     }
 
 
 
-@app.get(REMOVED_SECRET/product/{id}REMOVED_SECRET, response_model=Product)
+@app.get("/product/{id}", response_model=Product)
 def get_product(id: int):
     ProductQuery = TinyQuery()
     result = db.get(ProductQuery.id == id)
     if not result:
-        raise HTTPException(status_code=404, detail=REMOVED_SECRETProduct not foundREMOVED_SECRET)
+        raise HTTPException(status_code=404, detail="Product not found")
     return result

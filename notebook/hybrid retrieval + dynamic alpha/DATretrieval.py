@@ -24,10 +24,10 @@ pc = Pinecone(api_key=CHARRAN_API)
 index = pc.Index('italian-db')
 
 # Load sentence embedding model
-model = SentenceTransformer(REMOVED_SECRETBAAI/bge-m3REMOVED_SECRET)
+model = SentenceTransformer("BAAI/bge-m3")
 
 # Load embeddings and titles
-italian_embeddings = pd.read_pickle(REMOVED_SECRETen_to_it_embeddings.pklREMOVED_SECRET)
+italian_embeddings = pd.read_pickle("en_to_it_embeddings.pkl")
 english_titles = italian_embeddings['title']
 italian_titles = italian_embeddings['title_italian']
 
@@ -42,10 +42,10 @@ bm25_it = BM25Okapi(tokenized_it)
 #Improved prompt for dynamic alpha calculation using LLM
 
 # Set your OpenAI API key
-client = OpenAI(api_key= deepseek_API_KEY, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
+client = OpenAI(api_key= deepseek_API_KEY, base_url="https://openrouter.ai/api/v1")
 # prompting for dynamic alpha calculation
 def get_dynamic_alpha(question, dense_result, bm25_result):
-    system_prompt = REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETYou are a multilingual evaluator in an Italian e-commerce site assessing the retrieval effectiveness of dense
+    system_prompt = """You are a multilingual evaluator in an Italian e-commerce site assessing the retrieval effectiveness of dense
 retrieval (Cosine Distance) and BM25 retrieval for finding the correct Italian product title given an English-language query.
 
 ## Task:
@@ -65,19 +65,19 @@ Given a query and two top-1 search results (one from dense retrieval, one from B
 Return two integers separated by a space:
 - First number: dense retrieval score.
 - Second number: BM25 retrieval score.
-REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+"""
 
-    user_prompt = fREMOVED_SECRETREMOVED_SECRETREMOVED_SECRET### Given Data:
-- Question: REMOVED_SECRET{question}REMOVED_SECRET
-- dense retrieval Top1 Result: REMOVED_SECRET{dense_result}REMOVED_SECRET
-- BM25 retrieval Top1 Result: REMOVED_SECRET{bm25_result}REMOVED_SECRET
-REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    user_prompt = f"""### Given Data:
+- Question: "{question}"
+- dense retrieval Top1 Result: "{dense_result}"
+- BM25 retrieval Top1 Result: "{bm25_result}"
+"""
 
     response = client.chat.completions.create(
-        model=REMOVED_SECRETdeepseek/deepseek-chat-v3-0324:freeREMOVED_SECRET,
+        model="deepseek/deepseek-chat-v3-0324:free",
         messages=[
-            {REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETsystemREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: system_prompt},
-            {REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETuserREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: user_prompt}
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
         ],
         temperature=0
     )
@@ -127,7 +127,7 @@ def hybrid_search_dat(query, top_k=5):
     # --- Get dynamic alpha from GPT ---
     start = time.time()
     alpha = get_dynamic_alpha(query, dense_text, bm25_text)
-    #print(fREMOVED_SECRETAlpha fetched: {alpha} in {time.time() - start:.2f}sREMOVED_SECRET)
+    #print(f"Alpha fetched: {alpha} in {time.time() - start:.2f}s")
 
     # --- Normalize Scores ---
     scaler = MinMaxScaler()
@@ -146,12 +146,12 @@ def hybrid_search_dat(query, top_k=5):
     # --- Prepare and return top-k titles with BERTScores ---
     titles = [italian_embeddings['title_italian'][idx] for idx, _ in hybrid_results[:top_k]]
     reference_query = query
-    _, _, F1 = score(titles, [reference_query] * len(titles), lang=REMOVED_SECRETmultilingualREMOVED_SECRET, verbose=False)
+    _, _, F1 = score(titles, [reference_query] * len(titles), lang="multilingual", verbose=False)
 
     output = [
         {
-            REMOVED_SECRETtitle_italianREMOVED_SECRET: title,
-            REMOVED_SECRETbert_score_f1REMOVED_SECRET: round(f1.item(), 4)
+            "title_italian": title,
+            "bert_score_f1": round(f1.item(), 4)
         }
         for title, f1 in zip(titles, F1)
     ]
@@ -160,8 +160,8 @@ def hybrid_search_dat(query, top_k=5):
 
 #example to run the code
 
-if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
-    query = REMOVED_SECRETMen's white shirtREMOVED_SECRET
+if __name__ == "__main__":
+    query = "Men's white shirt"
     results = hybrid_search_dat(query, top_k=5)
     for result in results:
         print(result)

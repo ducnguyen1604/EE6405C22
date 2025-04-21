@@ -67,7 +67,7 @@ def embed_expanded(query_list, model):
     #embed expanded queries
     for query_dict in query_list:
         embedding=model.encode(query_dict['term'],  convert_to_tensor=True).cpu().numpy() #size1024
-        query_embeddings.append(embedding * query_dict[REMOVED_SECRETweightREMOVED_SECRET])
+        query_embeddings.append(embedding * query_dict["weight"])
 
     query_embedding = sum(query_embeddings) / len(query_embeddings)  # Weighted mean
     return query_embedding
@@ -81,24 +81,24 @@ def init_index(pc, index_name, data, embedding_col, eng_col, tgt_col, tgt_lang):
         pc.create_index(
             name=index_name,
             dimension=dimension,
-            metric=REMOVED_SECRETcosineREMOVED_SECRET,  # by cosine similarity
+            metric="cosine",  # by cosine similarity
             spec=ServerlessSpec(
-                cloud=REMOVED_SECRETawsREMOVED_SECRET,  # or REMOVED_SECRETgcpREMOVED_SECRET
-                region=REMOVED_SECRETus-east-1REMOVED_SECRET 
+                cloud="aws",  # or "gcp"
+                region="us-east-1" 
             )
         )
 
         index = pc.Index(index_name)
-        print(REMOVED_SECRETUpserting vectors...REMOVED_SECRET)
+        print("Upserting vectors...")
         vectors_to_upsert = []
         for _, row in data.iterrows():
             vectors_to_upsert.append({
-                REMOVED_SECRETidREMOVED_SECRET: str(_),  # Use index or generate unique IDs
-                REMOVED_SECRETvaluesREMOVED_SECRET: row[embedding_col],  # Using Chinese embeddings
-                REMOVED_SECRETmetadataREMOVED_SECRET: {
-                    REMOVED_SECRETtitleREMOVED_SECRET: row[eng_col],
-                    REMOVED_SECRETchinese_titleREMOVED_SECRET: row[tgt_col],
-                    REMOVED_SECRETembedding_typeREMOVED_SECRET: tgt_lang  # Track which embedding was used
+                "id": str(_),  # Use index or generate unique IDs
+                "values": row[embedding_col],  # Using Chinese embeddings
+                "metadata": {
+                    "title": row[eng_col],
+                    "chinese_title": row[tgt_col],
+                    "embedding_type": tgt_lang  # Track which embedding was used
                 }
             })
 
@@ -162,11 +162,11 @@ def search_pinecone(query_list, embedding_model, index_name, env_path, top_k=5):
     return id_list, score_list
 
 def scores_to_ranking(scores: list[float]) -> list[int]:
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETConvert float scores into int rankings (1 = best).REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """Convert float scores into int rankings (1 = best)."""
     return np.argsort(scores)[::-1] + 1  # ranks start at 1
 
 def rrf(keyword_rank: int, semantic_rank: int, k: int = 60) -> float:
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETCombine keyword rank and semantic rank into a hybrid score using RRF.REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """Combine keyword rank and semantic rank into a hybrid score using RRF."""
     return 1 / (k + keyword_rank) + 1 / (k + semantic_rank)
 
 def hybrid_expanded_search(query_list, bm25_corpus, pinecone_indices, embedding_model, env_path, tgt_lang='cn', top_k=5 ):
@@ -205,15 +205,15 @@ def hybrid_expanded_search(query_list, bm25_corpus, pinecone_indices, embedding_
     
     return hybrid_top_ids, hybrid_top_scores
 
-def calculate_bertscore(candidate, reference, lang = REMOVED_SECRETenREMOVED_SECRET):
+def calculate_bertscore(candidate, reference, lang = "en"):
     with warnings.catch_warnings():
-        warnings.simplefilter(REMOVED_SECRETignoreREMOVED_SECRET)
+        warnings.simplefilter("ignore")
         # Compute scores
         P, R, F1 = score(
             [candidate], 
             [reference], 
             lang=lang,
-            model_type=REMOVED_SECRETbert-base-multilingual-casedREMOVED_SECRET,  # Multilingual BERT
+            model_type="bert-base-multilingual-cased",  # Multilingual BERT
             verbose=False  # Disable progress messages
         )
     return P.item(), R.item(), F1.item()

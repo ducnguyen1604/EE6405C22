@@ -1,17 +1,17 @@
 from search_modules.italian import search_italian
 
-if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
-    query = input(REMOVED_SECRETEnter a product search query (e.g., 'shirt'): REMOVED_SECRET)
+if __name__ == "__main__":
+    query = input("Enter a product search query (e.g., 'shirt'): ")
     results = search_italian(query)
 
     if not results:
-        print(REMOVED_SECRET❌ No matching products found.REMOVED_SECRET)
+        print("❌ No matching products found.")
     else:
-        print(REMOVED_SECRET\n✅ Search Results:REMOVED_SECRET)
+        print("\n✅ Search Results:")
         for idx, r in enumerate(results, 1):
             name = r['product']['name'].get('it', 'N/A')
             desc = r['product']['description'].get('it', '')
             price = r['product'].get('price', 'N/A')
-            print(fREMOVED_SECRET{idx}. {name} | €{price} | BERT F1: {r['bert_score_f1']}REMOVED_SECRET)
+            print(f"{idx}. {name} | €{price} | BERT F1: {r['bert_score_f1']}")
             if desc:
-                print(fREMOVED_SECRET   → {desc}\nREMOVED_SECRET)
+                print(f"   → {desc}\n")

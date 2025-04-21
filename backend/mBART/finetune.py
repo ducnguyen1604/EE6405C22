@@ -20,23 +20,23 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
         return super().generate(*args, **kwargs)
 
 # Update the data path to a proper path
-data_path = REMOVED_SECRET../data/REMOVED_SECRET
+data_path = "../data/"
 
 def load_and_preprocess(lang_pair):
-    dataset = load_dataset(REMOVED_SECRETcsvREMOVED_SECRET, data_files={
-        REMOVED_SECRETtrainREMOVED_SECRET: fREMOVED_SECRET{data_path}{lang_pair}_train.csvREMOVED_SECRET,
-        REMOVED_SECRETvalREMOVED_SECRET: fREMOVED_SECRET{data_path}{lang_pair}_val.csvREMOVED_SECRET,
-        REMOVED_SECRETtestREMOVED_SECRET: fREMOVED_SECRET{data_path}{lang_pair}_test.csvREMOVED_SECRET
+    dataset = load_dataset("csv", data_files={
+        "train": f"{data_path}{lang_pair}_train.csv",
+        "val": f"{data_path}{lang_pair}_val.csv",
+        "test": f"{data_path}{lang_pair}_test.csv"
     })
     # Add language information to the dataset
-    src_lang, tgt_lang = lang_pair.split(REMOVED_SECRET_REMOVED_SECRET)
-    for split in [REMOVED_SECRETtrainREMOVED_SECRET, REMOVED_SECRETvalREMOVED_SECRET, REMOVED_SECRETtestREMOVED_SECRET]:
-        dataset[split] = dataset[split].add_column(REMOVED_SECRETsource_langREMOVED_SECRET, [src_lang] * len(dataset[split]))
-        dataset[split] = dataset[split].add_column(REMOVED_SECRETtarget_langREMOVED_SECRET, [tgt_lang] * len(dataset[split]))
-    return dataset[REMOVED_SECRETtrainREMOVED_SECRET], dataset[REMOVED_SECRETvalREMOVED_SECRET], dataset[REMOVED_SECRETtestREMOVED_SECRET]
+    src_lang, tgt_lang = lang_pair.split("_")
+    for split in ["train", "val", "test"]:
+        dataset[split] = dataset[split].add_column("source_lang", [src_lang] * len(dataset[split]))
+        dataset[split] = dataset[split].add_column("target_lang", [tgt_lang] * len(dataset[split]))
+    return dataset["train"], dataset["val"], dataset["test"]
 
 # Load all language pairs
-lang_pairs = [REMOVED_SECRETen_esREMOVED_SECRET, REMOVED_SECRETen_itREMOVED_SECRET, REMOVED_SECRETen_cnREMOVED_SECRET]
+lang_pairs = ["en_es", "en_it", "en_cn"]
 all_datasets = {lp: load_and_preprocess(lp) for lp in lang_pairs}
 
 # Concatenate all training and validation datasets
@@ -51,8 +51,8 @@ combined_train = concatenate_datasets(train_datasets)
 combined_val = concatenate_datasets(val_datasets)
 
 # Load mBART50
-model = MBartForConditionalGeneration.from_pretrained(REMOVED_SECRETfacebook/mbart-large-50-many-to-many-mmtREMOVED_SECRET)
-tokenizer = MBart50TokenizerFast.from_pretrained(REMOVED_SECRETfacebook/mbart-large-50-many-to-many-mmtREMOVED_SECRET)
+model = MBartForConditionalGeneration.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
+tokenizer = MBart50TokenizerFast.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
 
 # Freeze encoder + embeddings
 '''
@@ -61,57 +61,57 @@ for param in model.model.encoder.parameters():
 model.model.shared.weight.requires_grad = False  # Embeddings
 
 # Verify frozen params (only decoder should be trainable)
-print(REMOVED_SECRETTrainable parameters:REMOVED_SECRET)
+print("Trainable parameters:")
 for name, param in model.named_parameters():
     if param.requires_grad:
         print(name)
 '''
 
 lang_code_map = {
-    REMOVED_SECRETenREMOVED_SECRET: REMOVED_SECRETen_XXREMOVED_SECRET,
-    REMOVED_SECRETesREMOVED_SECRET: REMOVED_SECRETes_XXREMOVED_SECRET,
-    REMOVED_SECRETitREMOVED_SECRET: REMOVED_SECRETit_ITREMOVED_SECRET, 
-    REMOVED_SECRETcnREMOVED_SECRET: REMOVED_SECRETzh_CNREMOVED_SECRET
+    "en": "en_XX",
+    "es": "es_XX",
+    "it": "it_IT", 
+    "cn": "zh_CN"
 }
 
 def tokenize_fn(batch):
     # Extract language pair from the dataset
-    src_lang = batch[REMOVED_SECRETsource_langREMOVED_SECRET][0]
-    tgt_lang = batch[REMOVED_SECRETtarget_langREMOVED_SECRET][0]
+    src_lang = batch["source_lang"][0]
+    tgt_lang = batch["target_lang"][0]
     
     tokenizer.src_lang = lang_code_map[src_lang]
     tokenizer.tgt_lang = lang_code_map[tgt_lang]
 
     # Tokenize source
     inputs = tokenizer(
-        batch[REMOVED_SECRETsource_textREMOVED_SECRET],
+        batch["source_text"],
         max_length=64,
         truncation=True,
-        padding=REMOVED_SECRETmax_lengthREMOVED_SECRET
+        padding="max_length"
     )
     
     # Tokenize target with special handling for padding
     with tokenizer.as_target_tokenizer():
         labels = tokenizer(
-            batch[REMOVED_SECRETtarget_textREMOVED_SECRET],
+            batch["target_text"],
             max_length=64,
             truncation=True,
-            padding=REMOVED_SECRETmax_lengthREMOVED_SECRET
+            padding="max_length"
         )
         # Replace padding token ID with -100 for loss computation
-        labels[REMOVED_SECRETinput_idsREMOVED_SECRET] = [
+        labels["input_ids"] = [
             [token if token != tokenizer.pad_token_id else -100 for token in label]
-            for label in labels[REMOVED_SECRETinput_idsREMOVED_SECRET]
+            for label in labels["input_ids"]
         ]
     
     inputs = {
-        REMOVED_SECRETinput_idsREMOVED_SECRET: inputs[REMOVED_SECRETinput_idsREMOVED_SECRET],
-        REMOVED_SECRETattention_maskREMOVED_SECRET: inputs[REMOVED_SECRETattention_maskREMOVED_SECRET],
-        REMOVED_SECRETlabelsREMOVED_SECRET: labels[REMOVED_SECRETinput_idsREMOVED_SECRET]
+        "input_ids": inputs["input_ids"],
+        "attention_mask": inputs["attention_mask"],
+        "labels": labels["input_ids"]
     }
     return inputs
 
-bleu = evaluate.load(REMOVED_SECRETbleuREMOVED_SECRET)
+bleu = evaluate.load("bleu")
 
 def compute_metrics(eval_preds):
     preds, labels = eval_preds
@@ -125,7 +125,7 @@ def compute_metrics(eval_preds):
     )
 
 training_args = Seq2SeqTrainingArguments(
-    output_dir=REMOVED_SECRET./mbart50-ecommerceREMOVED_SECRET,
+    output_dir="./mbart50-ecommerce",
     per_device_train_batch_size=16,
     per_device_eval_batch_size=4,
     num_train_epochs=5,
@@ -133,8 +133,8 @@ training_args = Seq2SeqTrainingArguments(
     weight_decay=0.01,
     gradient_accumulation_steps=2,
     fp16=True,
-    evaluation_strategy=REMOVED_SECRETepochREMOVED_SECRET,
-    save_strategy=REMOVED_SECRETepochREMOVED_SECRET,
+    evaluation_strategy="epoch",
+    save_strategy="epoch",
     logging_steps=50,
     predict_with_generate=True,
     ignore_data_skip=True,
@@ -142,7 +142,7 @@ training_args = Seq2SeqTrainingArguments(
     generation_max_length=64,
     generation_num_beams=4,
     warmup_ratio=0.1,
-    lr_scheduler_type=REMOVED_SECRETcosineREMOVED_SECRET
+    lr_scheduler_type="cosine"
 )
 
 # Tokenize the combined datasets
@@ -165,33 +165,33 @@ trainer = CustomSeq2SeqTrainer(
     tokenizer=tokenizer
 )
 
-print(REMOVED_SECRET\n=== Training Multilingual Model ===REMOVED_SECRET)
+print("\n=== Training Multilingual Model ===")
 trainer.train()
 
 # Save the final model
-model.save_pretrained(REMOVED_SECRET./mbart50-ecommerce/finalREMOVED_SECRET)
-tokenizer.save_pretrained(REMOVED_SECRET./mbart50-ecommerce/finalREMOVED_SECRET)
+model.save_pretrained("./mbart50-ecommerce/final")
+tokenizer.save_pretrained("./mbart50-ecommerce/final")
 
-def translate(text, src_lang=REMOVED_SECRETenREMOVED_SECRET, tgt_lang=REMOVED_SECRETesREMOVED_SECRET):
+def translate(text, src_lang="en", tgt_lang="es"):
     # Use the correct path format matching your saved models
-    lang_pair = fREMOVED_SECRET{src_lang}_{tgt_lang}REMOVED_SECRET
-    model_path = fREMOVED_SECRET./mbart50-ecommerce/{lang_pair}/pytorch_model.binREMOVED_SECRET
+    lang_pair = f"{src_lang}_{tgt_lang}"
+    model_path = f"./mbart50-ecommerce/{lang_pair}/pytorch_model.bin"
     
     # Check if file exists before loading
     if not os.path.exists(model_path):
-        raise FileNotFoundError(fREMOVED_SECRETModel for {lang_pair} not found at {model_path}REMOVED_SECRET)
+        raise FileNotFoundError(f"Model for {lang_pair} not found at {model_path}")
         
     # Load state dict with proper error handling
     try:
         state_dict = torch.load(model_path, map_location=model.device)
         model.load_state_dict(state_dict)
     except Exception as e:
-        print(fREMOVED_SECRETError loading model: {e}REMOVED_SECRET)
+        print(f"Error loading model: {e}")
         return None
         
     tokenizer.src_lang = lang_code_map[src_lang]
     
-    inputs = tokenizer(text, return_tensors=REMOVED_SECRETptREMOVED_SECRET).to(model.device)
+    inputs = tokenizer(text, return_tensors="pt").to(model.device)
     outputs = model.generate(
         **inputs,
         forced_bos_token_id=tokenizer.lang_code_to_id[lang_code_map[tgt_lang]]

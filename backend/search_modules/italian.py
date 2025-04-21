@@ -10,11 +10,11 @@ import os
 import re
 
 # Load TinyDB product database
-db = TinyDB(REMOVED_SECRETdata/products.jsonREMOVED_SECRET)
+db = TinyDB("data/products.json")
 Product = Query()
 
 # Load embedding model
-model = SentenceTransformer(REMOVED_SECRETBAAI/bge-m3REMOVED_SECRET)
+model = SentenceTransformer("BAAI/bge-m3")
 
 # Load Italian product titles and English originals
 all_products = db.all()
@@ -23,8 +23,8 @@ italian_titles = []
 product_refs = []
 
 for product in all_products:
-    title_en = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET)
-    title_it = product.get(REMOVED_SECRETnameREMOVED_SECRET, {}).get(REMOVED_SECRETitREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET)
+    title_en = product.get("name", {}).get("en", "")
+    title_it = product.get("name", {}).get("it", "")
     if title_en and title_it:
         english_titles.append(title_en)
         italian_titles.append(title_it)
@@ -40,7 +40,7 @@ def search_italian(query: str, top_k: int = 5):
     query_tokens = query.lower().split()
 
     # BM25
-    bm25_scores = bm25_it.get_scores(query_tokens) if lang == REMOVED_SECRETitREMOVED_SECRET else bm25_en.get_scores(query_tokens)
+    bm25_scores = bm25_it.get_scores(query_tokens) if lang == "it" else bm25_en.get_scores(query_tokens)
 
     # Dense vector
     query_vec = model.encode(query)
@@ -57,12 +57,12 @@ def search_italian(query: str, top_k: int = 5):
     hybrid_scores.sort(key=lambda x: x[1], reverse=True)
 
     top_products = [product_refs[i] for i, _ in hybrid_scores[:top_k]]
-    titles = [p[REMOVED_SECRETnameREMOVED_SECRET][REMOVED_SECRETitREMOVED_SECRET] for p in top_products]
-    _, _, f1s = score(titles, [query] * len(titles), lang=REMOVED_SECRETitREMOVED_SECRET, verbose=False)
+    titles = [p["name"]["it"] for p in top_products]
+    _, _, f1s = score(titles, [query] * len(titles), lang="it", verbose=False)
 
     return [
         {
-            REMOVED_SECRETproductREMOVED_SECRET: p,
-            REMOVED_SECRETbert_score_f1REMOVED_SECRET: round(f1.item(), 4)
+            "product": p,
+            "bert_score_f1": round(f1.item(), 4)
         } for p, f1 in zip(top_products, f1s)
     ]

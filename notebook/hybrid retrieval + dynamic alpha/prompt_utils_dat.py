@@ -9,10 +9,10 @@ load_dotenv(dotenv_path='../.env')
 api_key = os.getenv('deepseek_API_KEY')
 
 # Initialize OpenAI client with loaded key
-client = OpenAI(api_key=api_key, base_url=REMOVED_SECREThttps://openrouter.ai/api/v1REMOVED_SECRET)
+client = OpenAI(api_key=api_key, base_url="https://openrouter.ai/api/v1")
 
 def get_dynamic_alpha(question, dense_result, bm25_result):
-    system_prompt = REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETYou are a multilingual evaluator in an Italian e-commerce site assessing the retrieval effectiveness of dense
+    system_prompt = """You are a multilingual evaluator in an Italian e-commerce site assessing the retrieval effectiveness of dense
 retrieval (Cosine Distance) and BM25 retrieval for finding the correct Italian product title given an English-language query.
 
 ## Task:
@@ -32,19 +32,19 @@ Given a query and two top-1 search results (one from dense retrieval, one from B
 Return two integers separated by a space:
 - First number: dense retrieval score.
 - Second number: BM25 retrieval score.
-REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+"""
 
-    user_prompt = fREMOVED_SECRETREMOVED_SECRETREMOVED_SECRET### Given Data:
-- Question: REMOVED_SECRET{question}REMOVED_SECRET
-- dense retrieval Top1 Result: REMOVED_SECRET{dense_result}REMOVED_SECRET
-- BM25 retrieval Top1 Result: REMOVED_SECRET{bm25_result}REMOVED_SECRET
-REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    user_prompt = f"""### Given Data:
+- Question: "{question}"
+- dense retrieval Top1 Result: "{dense_result}"
+- BM25 retrieval Top1 Result: "{bm25_result}"
+"""
 
     response = client.chat.completions.create(
-        model=REMOVED_SECRETdeepseek/deepseek-chat-v3-0324:freeREMOVED_SECRET,
+        model="deepseek/deepseek-chat-v3-0324:free",
         messages=[
-            {REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETsystemREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: system_prompt},
-            {REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETuserREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: user_prompt}
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
         ],
         temperature=0
     )

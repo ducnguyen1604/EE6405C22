@@ -10,22 +10,22 @@ try:
 except ModuleNotFoundError:
     import subprocess
     import sys
-    subprocess.check_call([sys.executable, REMOVED_SECRET-mREMOVED_SECRET, REMOVED_SECRETpipREMOVED_SECRET, REMOVED_SECRETinstallREMOVED_SECRET, REMOVED_SECRETpyspellcheckerREMOVED_SECRET])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "pyspellchecker"])
     from spellchecker import SpellChecker
 
 spell = SpellChecker()
 
 # Load dataset
-amazon_df = pd.read_csv(REMOVED_SECRETC:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\Amazon_en_to_es.csvREMOVED_SECRET)
+amazon_df = pd.read_csv("C:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\Amazon_en_to_es.csv")
 
 # Load MarianMT models
 models = {
-    REMOVED_SECRETen→esREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-en-esREMOVED_SECRET,
-    REMOVED_SECRETes→enREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-es-enREMOVED_SECRET
+    "en→es": "Helsinki-NLP/opus-mt-en-es",
+    "es→en": "Helsinki-NLP/opus-mt-es-en"
 }
 translation_pipelines = {}
 for direction, model_name in models.items():
-    print(fREMOVED_SECRET🔄 Loading model: {direction}REMOVED_SECRET)
+    print(f"🔄 Loading model: {direction}")
     tokenizer = MarianTokenizer.from_pretrained(model_name)
     model = MarianMTModel.from_pretrained(model_name)
     translation_pipelines[direction] = (tokenizer, model)
@@ -33,7 +33,7 @@ for direction, model_name in models.items():
 # Translation function
 def translate(text, direction):
     tokenizer, model = translation_pipelines[direction]
-    inputs = tokenizer(text, return_tensors=REMOVED_SECRETptREMOVED_SECRET, padding=True)
+    inputs = tokenizer(text, return_tensors="pt", padding=True)
     outputs = model.generate(**inputs)
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
@@ -55,73 +55,73 @@ def search_dataset(df, column, query, fuzzy_threshold=70):
 
 # Main search loop
 while True:
-    user_input = input(REMOVED_SECRET\nEnter your product search query (English/Spanish, or type 'exit' to quit): REMOVED_SECRET)
-    if user_input.lower() in [REMOVED_SECRETexitREMOVED_SECRET, REMOVED_SECRETquitREMOVED_SECRET]:
-        print(REMOVED_SECRET👋 Exiting search. Goodbye!REMOVED_SECRET)
+    user_input = input("\nEnter your product search query (English/Spanish, or type 'exit' to quit): ")
+    if user_input.lower() in ["exit", "quit"]:
+        print("👋 Exiting search. Goodbye!")
         break
 
-    corrected_input = REMOVED_SECRET REMOVED_SECRET.join([spell.correction(w) or w for w in user_input.split()])
+    corrected_input = " ".join([spell.correction(w) or w for w in user_input.split()])
     if corrected_input.lower() != user_input.lower():
-        print(fREMOVED_SECRET📝 Corrected input: {corrected_input}REMOVED_SECRET)
+        print(f"📝 Corrected input: {corrected_input}")
     else:
         corrected_input = user_input
 
     detected_lang = detect(corrected_input)
-    print(fREMOVED_SECRET🔍 Detected language: {detected_lang}REMOVED_SECRET)
+    print(f"🔍 Detected language: {detected_lang}")
 
     # Non-English/Spanish fallback
-    if detected_lang not in [REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETesREMOVED_SECRET]:
+    if detected_lang not in ["en", "es"]:
         if all(c.isascii() and (c.isalpha() or c.isspace()) for c in corrected_input):
-            print(fREMOVED_SECRET⚠️ Detected '{detected_lang}', trying both English and Spanish due to input format.REMOVED_SECRET)
-            en_results = search_dataset(amazon_df, REMOVED_SECRETtitleREMOVED_SECRET, corrected_input)
-            es_to_en_query = translate(corrected_input, REMOVED_SECRETes→enREMOVED_SECRET)
-            es_results = search_dataset(amazon_df, REMOVED_SECRETtitleREMOVED_SECRET, es_to_en_query)
+            print(f"⚠️ Detected '{detected_lang}', trying both English and Spanish due to input format.")
+            en_results = search_dataset(amazon_df, "title", corrected_input)
+            es_to_en_query = translate(corrected_input, "es→en")
+            es_results = search_dataset(amazon_df, "title", es_to_en_query)
 
             if not en_results.empty:
-                print(REMOVED_SECRET✅ Interpreted as English.REMOVED_SECRET)
+                print("✅ Interpreted as English.")
                 search_query_en = corrected_input
-                detected_lang = REMOVED_SECRETenREMOVED_SECRET
+                detected_lang = "en"
                 results = en_results
             elif not es_results.empty:
-                print(REMOVED_SECRET✅ Interpreted as Spanish.REMOVED_SECRET)
+                print("✅ Interpreted as Spanish.")
                 search_query_en = es_to_en_query
-                detected_lang = REMOVED_SECRETesREMOVED_SECRET
+                detected_lang = "es"
                 results = es_results
             else:
-                print(REMOVED_SECRET❌ No matching results found in either English or Spanish.REMOVED_SECRET)
+                print("❌ No matching results found in either English or Spanish.")
                 continue
         else:
-            print(REMOVED_SECRET⚠️ Only English or Spanish are supported. Try again.REMOVED_SECRET)
+            print("⚠️ Only English or Spanish are supported. Try again.")
             continue
     else:
         # Translate Spanish to English
-        if detected_lang == REMOVED_SECRETesREMOVED_SECRET:
-            search_query_en = translate(corrected_input, REMOVED_SECRETes→enREMOVED_SECRET)
+        if detected_lang == "es":
+            search_query_en = translate(corrected_input, "es→en")
         else:
             search_query_en = corrected_input
 
-        results = search_dataset(amazon_df, REMOVED_SECRETtitleREMOVED_SECRET, search_query_en)
+        results = search_dataset(amazon_df, "title", search_query_en)
         if results.empty:
-            print(REMOVED_SECRET❌ No matching results found.REMOVED_SECRET)
+            print("❌ No matching results found.")
             continue
 
     # Display results
-    print(REMOVED_SECRET✅ Search Results:REMOVED_SECRET)
+    print("✅ Search Results:")
     print(results.head())
 
     # Translate to Spanish if needed
-    if detected_lang == REMOVED_SECRETesREMOVED_SECRET:
-        print(REMOVED_SECRET\n🌍 Translated Results:REMOVED_SECRET)
-        translated_titles = [translate(title, REMOVED_SECRETen→esREMOVED_SECRET) for title in results[REMOVED_SECRETtitleREMOVED_SECRET].head()]
-        for original, translated in zip(results[REMOVED_SECRETtitleREMOVED_SECRET].head(), translated_titles):
-            print(fREMOVED_SECRET- {original} → {translated}REMOVED_SECRET)
+    if detected_lang == "es":
+        print("\n🌍 Translated Results:")
+        translated_titles = [translate(title, "en→es") for title in results["title"].head()]
+        for original, translated in zip(results["title"].head(), translated_titles):
+            print(f"- {original} → {translated}")
     else:
-        print(REMOVED_SECRET\n🌍 All results already in English.REMOVED_SECRET)
+        print("\n🌍 All results already in English.")
 # Run BERTScore evaluation
-candidate_titles = results[REMOVED_SECRETtitleREMOVED_SECRET].head(5).tolist()
+candidate_titles = results["title"].head(5).tolist()
 references = [search_query_en] * len(candidate_titles)
 
-P, R, F1 = bert_score(candidate_titles, references, lang=REMOVED_SECRETenREMOVED_SECRET, verbose=False)
-print(REMOVED_SECRET\n📊 BERTScore Evaluation:REMOVED_SECRET)
+P, R, F1 = bert_score(candidate_titles, references, lang="en", verbose=False)
+print("\n📊 BERTScore Evaluation:")
 for i, (title, f1) in enumerate(zip(candidate_titles, F1)):
-    print(fREMOVED_SECRET{i+1}. {title[:60]}... → BERTScore F1: {f1.item():.4f}REMOVED_SECRET)
+    print(f"{i+1}. {title[:60]}... → BERTScore F1: {f1.item():.4f}")

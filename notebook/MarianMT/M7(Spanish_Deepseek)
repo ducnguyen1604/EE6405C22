@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 import os
 import openai
 
-load_dotenv(dotenv_path=REMOVED_SECRETApi.envREMOVED_SECRET)  # Load your DeepSeek key securely
-openai.api_key = os.getenv(REMOVED_SECRETDEEPSEEK_API_KEYREMOVED_SECRET)
-openai.api_base = REMOVED_SECREThttps://api.deepseek.com/v1REMOVED_SECRET
+load_dotenv(dotenv_path="Api.env")  # Load your DeepSeek key securely
+openai.api_key = os.getenv("DEEPSEEK_API_KEY")
+openai.api_base = "https://api.deepseek.com/v1"
 
 # Auto-install spellchecker if not present
 try:
@@ -17,24 +17,24 @@ try:
 except ModuleNotFoundError:
     import subprocess
     import sys
-    subprocess.check_call([sys.executable, REMOVED_SECRET-mREMOVED_SECRET, REMOVED_SECRETpipREMOVED_SECRET, REMOVED_SECRETinstallREMOVED_SECRET, REMOVED_SECRETpyspellcheckerREMOVED_SECRET])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "pyspellchecker"])
     from spellchecker import SpellChecker
 
 # Spell checker setup
 spell = SpellChecker()
 
 # Load dataset
-amazon_df = pd.read_csv(REMOVED_SECRETC:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\Amazon_en_to_es.csvREMOVED_SECRET)
+amazon_df = pd.read_csv("C:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\Amazon_en_to_es.csv")
 
 # Load MarianMT English-Spanish models
 models = {
-    REMOVED_SECRETen→esREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-en-esREMOVED_SECRET,
-    REMOVED_SECRETes→enREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-es-enREMOVED_SECRET
+    "en→es": "Helsinki-NLP/opus-mt-en-es",
+    "es→en": "Helsinki-NLP/opus-mt-es-en"
 }
 
 translation_pipelines = {}
 for direction, model_name in models.items():
-    print(fREMOVED_SECRET🔄 Loading model: {direction}REMOVED_SECRET)
+    print(f"🔄 Loading model: {direction}")
     tokenizer = MarianTokenizer.from_pretrained(model_name)
     model = MarianMTModel.from_pretrained(model_name)
     translation_pipelines[direction] = (tokenizer, model)
@@ -42,24 +42,24 @@ for direction, model_name in models.items():
 # Translation function
 def translate(text, direction):
     tokenizer, model = translation_pipelines[direction]
-    inputs = tokenizer(text, return_tensors=REMOVED_SECRETptREMOVED_SECRET, padding=True)
+    inputs = tokenizer(text, return_tensors="pt", padding=True)
     outputs = model.generate(**inputs)
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
 # Semantic rephrasing with DeepSeek
 def semantic_rephrase_deepseek(query):
-    prompt = fREMOVED_SECRETREMOVED_SECRETREMOVED_SECRETYou are a helpful assistant that improves e-commerce search queries.
-Given the user's search input: REMOVED_SECRET{query}REMOVED_SECRET, rephrase or expand it into a more descriptive English query that helps retrieve more relevant product titles from a catalog.
+    prompt = f"""You are a helpful assistant that improves e-commerce search queries.
+Given the user's search input: "{query}", rephrase or expand it into a more descriptive English query that helps retrieve more relevant product titles from a catalog.
 
-Only output the improved query, no explanation.REMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+Only output the improved query, no explanation."""
     
     response = openai.ChatCompletion.create(
-        model=REMOVED_SECRETdeepseek-chatREMOVED_SECRET,
-        messages=[{REMOVED_SECRETroleREMOVED_SECRET: REMOVED_SECRETuserREMOVED_SECRET, REMOVED_SECRETcontentREMOVED_SECRET: prompt}],
+        model="deepseek-chat",
+        messages=[{"role": "user", "content": prompt}],
         temperature=0.3,
         max_tokens=100
     )
-    return response[REMOVED_SECRETchoicesREMOVED_SECRET][0][REMOVED_SECRETmessageREMOVED_SECRET][REMOVED_SECRETcontentREMOVED_SECRET].strip()
+    return response["choices"][0]["message"]["content"].strip()
 
 # Search function
 def search_dataset(df, column, query):
@@ -67,84 +67,84 @@ def search_dataset(df, column, query):
 
 # Main loop
 while True:
-    user_input = input(REMOVED_SECRET\nEnter your product search query (English/Spanish, or type 'exit' to quit): REMOVED_SECRET)
-    if user_input.lower() in [REMOVED_SECRETexitREMOVED_SECRET, REMOVED_SECRETquitREMOVED_SECRET]:
-        print(REMOVED_SECRET👋 Exiting search. Goodbye!REMOVED_SECRET)
+    user_input = input("\nEnter your product search query (English/Spanish, or type 'exit' to quit): ")
+    if user_input.lower() in ["exit", "quit"]:
+        print("👋 Exiting search. Goodbye!")
         break
 
     # Spell correct input
-    corrected_input = REMOVED_SECRET REMOVED_SECRET.join([spell.correction(w) or w for w in user_input.split()])
+    corrected_input = " ".join([spell.correction(w) or w for w in user_input.split()])
     if corrected_input.lower() != user_input.lower():
-        print(fREMOVED_SECRET📝 Corrected input: {corrected_input}REMOVED_SECRET)
+        print(f"📝 Corrected input: {corrected_input}")
     else:
         corrected_input = user_input
 
     # Detect language
     detected_lang = detect(corrected_input)
-    print(fREMOVED_SECRET🔍 Detected language: {detected_lang}REMOVED_SECRET)
+    print(f"🔍 Detected language: {detected_lang}")
 
     # Fallback logic if detection is off but input is ASCII-like
-    if detected_lang not in [REMOVED_SECRETenREMOVED_SECRET, REMOVED_SECRETesREMOVED_SECRET]:
+    if detected_lang not in ["en", "es"]:
         if all(c.isascii() and (c.isalpha() or c.isspace()) for c in corrected_input):
-            print(fREMOVED_SECRET⚠️ Detected '{detected_lang}', trying both English and Spanish due to input format.REMOVED_SECRET)
+            print(f"⚠️ Detected '{detected_lang}', trying both English and Spanish due to input format.")
 
             # Try both interpretations
-            en_results = search_dataset(amazon_df, REMOVED_SECRETtitleREMOVED_SECRET, corrected_input)
-            es_to_en_query = translate(corrected_input, REMOVED_SECRETes→enREMOVED_SECRET)
-            es_results = search_dataset(amazon_df, REMOVED_SECRETtitleREMOVED_SECRET, es_to_en_query)
+            en_results = search_dataset(amazon_df, "title", corrected_input)
+            es_to_en_query = translate(corrected_input, "es→en")
+            es_results = search_dataset(amazon_df, "title", es_to_en_query)
 
             if not en_results.empty:
-                print(REMOVED_SECRET✅ Interpreted as English.REMOVED_SECRET)
+                print("✅ Interpreted as English.")
                 search_query_en = corrected_input
-                detected_lang = REMOVED_SECRETenREMOVED_SECRET
+                detected_lang = "en"
                 results = en_results
             elif not es_results.empty:
-                print(REMOVED_SECRET✅ Interpreted as Spanish.REMOVED_SECRET)
+                print("✅ Interpreted as Spanish.")
                 search_query_en = es_to_en_query
-                detected_lang = REMOVED_SECRETesREMOVED_SECRET
+                detected_lang = "es"
                 results = es_results
             else:
-                print(REMOVED_SECRET❌ No matching results found in either English or Spanish.REMOVED_SECRET)
+                print("❌ No matching results found in either English or Spanish.")
                 continue
         else:
-            print(REMOVED_SECRET⚠️ Only English or Spanish are supported. Try again.REMOVED_SECRET)
+            print("⚠️ Only English or Spanish are supported. Try again.")
             continue
     else:
         # Normal translation flow
-        if detected_lang == REMOVED_SECRETesREMOVED_SECRET:
-            search_query_en = translate(corrected_input, REMOVED_SECRETes→enREMOVED_SECRET)
+        if detected_lang == "es":
+            search_query_en = translate(corrected_input, "es→en")
         else:
             search_query_en = corrected_input
 
         # Semantic enhancement
-        print(REMOVED_SECRET🧠 Enhancing query with semantic understanding via DeepSeek...REMOVED_SECRET)
+        print("🧠 Enhancing query with semantic understanding via DeepSeek...")
         semantic_query = semantic_rephrase_deepseek(search_query_en)
 
         # Show and log DeepSeek rephrased query
         if semantic_query.lower().strip() != search_query_en.lower().strip():
-            print(fREMOVED_SECRET🔍 Original query       : {search_query_en}REMOVED_SECRET)
-            print(fREMOVED_SECRET🧠 DeepSeek-enhanced    : {semantic_query}REMOVED_SECRET)
+            print(f"🔍 Original query       : {search_query_en}")
+            print(f"🧠 DeepSeek-enhanced    : {semantic_query}")
         else:
-            print(fREMOVED_SECRETℹ️ DeepSeek returned the same query: {semantic_query}REMOVED_SECRET)
+            print(f"ℹ️ DeepSeek returned the same query: {semantic_query}")
 
-        with open(REMOVED_SECRETdeepseek_log.txtREMOVED_SECRET, REMOVED_SECRETaREMOVED_SECRET, encoding=REMOVED_SECRETutf-8REMOVED_SECRET) as log:
-            log.write(fREMOVED_SECRETOriginal: {search_query_en} | Rephrased: {semantic_query}\nREMOVED_SECRET)
+        with open("deepseek_log.txt", "a", encoding="utf-8") as log:
+            log.write(f"Original: {search_query_en} | Rephrased: {semantic_query}\n")
 
         # Perform search
-        results = search_dataset(amazon_df, REMOVED_SECRETtitleREMOVED_SECRET, semantic_query)
+        results = search_dataset(amazon_df, "title", semantic_query)
         if results.empty:
-            print(REMOVED_SECRET❌ No matching results found.REMOVED_SECRET)
+            print("❌ No matching results found.")
             continue
 
     # Show results
-    print(REMOVED_SECRET✅ Search Results:REMOVED_SECRET)
+    print("✅ Search Results:")
     print(results.head())
 
     # Translate results back to Spanish
-    if detected_lang == REMOVED_SECRETesREMOVED_SECRET:
-        print(REMOVED_SECRET\n🌍 Translated Results:REMOVED_SECRET)
-        translated_titles = [translate(title, REMOVED_SECRETen→esREMOVED_SECRET) for title in results[REMOVED_SECRETtitleREMOVED_SECRET].head()]
-        for original, translated in zip(results[REMOVED_SECRETtitleREMOVED_SECRET].head(), translated_titles):
-            print(fREMOVED_SECRET- {original} → {translated}REMOVED_SECRET)
+    if detected_lang == "es":
+        print("\n🌍 Translated Results:")
+        translated_titles = [translate(title, "en→es") for title in results["title"].head()]
+        for original, translated in zip(results["title"].head(), translated_titles):
+            print(f"- {original} → {translated}")
     else:
-        print(REMOVED_SECRET\n🌍 All results already in English.REMOVED_SECRET)
+        print("\n🌍 All results already in English.")

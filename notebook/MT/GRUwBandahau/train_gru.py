@@ -101,7 +101,7 @@ def collate_fn(batch):
     return source_batch, target_batch
 
 def load_data(train_path, val_path, test_path, vocab_size=10000):
-    REMOVED_SECRETREMOVED_SECRETREMOVED_SECRETLoad data from CSV files and create vocabulariesREMOVED_SECRETREMOVED_SECRETREMOVED_SECRET
+    """Load data from CSV files and create vocabularies"""
     # Load CSV files
     train_df = pd.read_csv(train_path)
     val_df = pd.read_csv(val_path)
@@ -150,8 +150,8 @@ def load_data(train_path, val_path, test_path, vocab_size=10000):
     max_length_source = max(len(text.split()) for text in all_source)
     max_length_target = max(len(text.split()) for text in all_target) + 2  # +2 for <start> and <end> tokens
     
-    print(fREMOVED_SECRETMax source length: {max_length_source}REMOVED_SECRET)
-    print(fREMOVED_SECRETMax target length: {max_length_target}REMOVED_SECRET)
+    print(f"Max source length: {max_length_source}")
+    print(f"Max target length: {max_length_target}")
     
     return (train_source, train_target, val_source, val_target, test_source, test_target,
             source_vocab, target_vocab, max_length_source, max_length_target)
@@ -161,7 +161,7 @@ def train_epoch(model, dataloader, optimizer, criterion, device, clip=1.0, teach
     model.train()
     epoch_loss = 0
     
-    for batch_idx, (source, target) in enumerate(tqdm(dataloader, desc=REMOVED_SECRETTrainingREMOVED_SECRET)):
+    for batch_idx, (source, target) in enumerate(tqdm(dataloader, desc="Training")):
         source = source.to(device)
         target = target.to(device)
         
@@ -194,7 +194,7 @@ def validate(model, dataloader, criterion, device):
     val_loss = 0
     
     with torch.no_grad():
-        for source, target in tqdm(dataloader, desc=REMOVED_SECRETValidationREMOVED_SECRET):
+        for source, target in tqdm(dataloader, desc="Validation"):
             source = source.to(device)
             target = target.to(device)
             
@@ -234,7 +234,7 @@ def save_model(model, source_vocab, target_vocab, optimizer, epoch, loss, save_p
     }
     
     torch.save(checkpoint, save_path)
-    print(fREMOVED_SECRETModel saved to {save_path}REMOVED_SECRET)
+    print(f"Model saved to {save_path}")
 
 def main():
     # Set seed for reproducibility
@@ -242,7 +242,7 @@ def main():
     
     # Set device
     device = torch.device('cuda' if torch.cuda.is_available() and not HYPERPARAMETERS['no_cuda'] else 'cpu')
-    print(fREMOVED_SECRETUsing device: {device}REMOVED_SECRET)
+    print(f"Using device: {device}")
     
     # Create output directory
     os.makedirs(HYPERPARAMETERS['output_dir'], exist_ok=True)
@@ -252,7 +252,7 @@ def main():
         json.dump(HYPERPARAMETERS, f, indent=4)
     
     # Load data
-    print(REMOVED_SECRETLoading data...REMOVED_SECRET)
+    print("Loading data...")
     (train_source, train_target, val_source, val_target, test_source, test_target,
      source_vocab, target_vocab, max_length_source, max_length_target) = load_data(
         HYPERPARAMETERS['train_path'],
@@ -296,7 +296,7 @@ def main():
     )
     
     # Initialize model
-    print(REMOVED_SECRETInitializing model...REMOVED_SECRET)
+    print("Initializing model...")
     model = EncoderDecoder(
         input_vocab_size=len(source_vocab),
         output_vocab_size=len(target_vocab),
@@ -324,7 +324,7 @@ def main():
     )
     
     # Training loop
-    print(REMOVED_SECRETStarting training...REMOVED_SECRET)
+    print("Starting training...")
     best_val_loss = float('inf')
     train_losses = []
     val_losses = []
@@ -350,8 +350,8 @@ def main():
         
         # Print epoch results
         epoch_time = time.time() - start_time
-        print(fREMOVED_SECRETEpoch {epoch+1}/{HYPERPARAMETERS['epochs']} | Time: {epoch_time:.2f}sREMOVED_SECRET)
-        print(fREMOVED_SECRETTrain Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}REMOVED_SECRET)
+        print(f"Epoch {epoch+1}/{HYPERPARAMETERS['epochs']} | Time: {epoch_time:.2f}s")
+        print(f"Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}")
         
         # Save model if validation loss improved
         if val_loss < best_val_loss:
@@ -366,7 +366,7 @@ def main():
         
         # Early stopping
         if patience_counter >= HYPERPARAMETERS.get('early_stopping_patience', 5):
-            print(REMOVED_SECRETEarly stopping triggered!REMOVED_SECRET)
+            print("Early stopping triggered!")
             break
         
         # Save checkpoint every N epochs
@@ -378,7 +378,7 @@ def main():
     
     # Final evaluation on test set
     test_loss = validate(model, test_dataloader, criterion, device)
-    print(fREMOVED_SECRETFinal test loss: {test_loss:.4f}REMOVED_SECRET)
+    print(f"Final test loss: {test_loss:.4f}")
     
     # Save final model
     save_model(
@@ -397,7 +397,7 @@ def main():
     plt.savefig(os.path.join(HYPERPARAMETERS['output_dir'], 'loss_plot.png'))
     plt.close()
     
-    print(REMOVED_SECRETTraining completed!REMOVED_SECRET)
+    print("Training completed!")
 
-if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
+if __name__ == "__main__":
     main() 

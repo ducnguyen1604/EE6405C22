@@ -10,9 +10,9 @@ def run_spanish_query(query):
         'it': os.path.join(base_path, 'en_to_it_embeddings.pkl')
     }
 
-    mBART_model_path = os.path.join(base_path, REMOVED_SECRETfinalREMOVED_SECRET)
-    embed_model = REMOVED_SECRETBAAI/bge-m3REMOVED_SECRET
-    env_path = os.path.join(base_path, REMOVED_SECRET.envREMOVED_SECRET)
+    mBART_model_path = os.path.join(base_path, "final")
+    embed_model = "BAAI/bge-m3"
+    env_path = os.path.join(base_path, ".env")
 
     # Initialize environment
     mBART_model, mBART_tokenizer, data, bm25_corpus, dense_embed_model, pinecone_indices = init_mt_environment(
@@ -36,13 +36,13 @@ def run_spanish_query(query):
 
 
 # CLI testing
-if __name__ == REMOVED_SECRET__main__REMOVED_SECRET:
-    query = input(REMOVED_SECRET🔍 Enter a Spanish query to test the pipeline: REMOVED_SECRET)
+if __name__ == "__main__":
+    query = input("🔍 Enter a Spanish query to test the pipeline: ")
     result = run_spanish_query(query)
 
-    print(REMOVED_SECRET\n📦 Type of result:REMOVED_SECRET, type(result))
-    print(REMOVED_SECRET🧪 Is dictionary?REMOVED_SECRET, isinstance(result, dict))
-    print(REMOVED_SECRET\n✅ Sample Output:\nREMOVED_SECRET)
+    print("\n📦 Type of result:", type(result))
+    print("🧪 Is dictionary?", isinstance(result, dict))
+    print("\n✅ Sample Output:\n")
     for i, (product, score) in enumerate(result.items()):
-        print(fREMOVED_SECRET{i+1}. {product[:50]} → BERTScore: {score:.4f}REMOVED_SECRET)
+        print(f"{i+1}. {product[:50]} → BERTScore: {score:.4f}")
         if i == 4: break

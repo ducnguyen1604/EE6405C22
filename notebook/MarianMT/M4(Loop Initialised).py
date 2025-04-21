@@ -3,25 +3,25 @@ from transformers import MarianMTModel, MarianTokenizer
 from langdetect import detect
 
 # Load datasets
-amazon_df = pd.read_csv(REMOVED_SECRETC:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\Amazon_en_to_es.csvREMOVED_SECRET)
-shopee_df = pd.read_csv(REMOVED_SECRETC:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\Shopee_CN_to_EN.csvREMOVED_SECRET)
-italian_df = pd.read_csv(REMOVED_SECRETC:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\target_en_to_it.csvREMOVED_SECRET)
+amazon_df = pd.read_csv("C:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\Amazon_en_to_es.csv")
+shopee_df = pd.read_csv("C:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\Shopee_CN_to_EN.csv")
+italian_df = pd.read_csv("C:\\Users\\65988\\Documents\\GitHub\\EE6405C22\\NLP\\dataset\\target_en_to_it.csv")
 
 # Define translation models
 models = {
-    REMOVED_SECRETen→zhREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-en-zhREMOVED_SECRET,
-    REMOVED_SECRETzh→enREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-zh-enREMOVED_SECRET,
-    REMOVED_SECRETen→itREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-en-itREMOVED_SECRET,
-    REMOVED_SECRETit→enREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-mul-enREMOVED_SECRET,
-    REMOVED_SECRETen→frREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-en-frREMOVED_SECRET,
-    REMOVED_SECRETes→enREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-es-enREMOVED_SECRET,
-    REMOVED_SECRETen→esREMOVED_SECRET: REMOVED_SECRETHelsinki-NLP/opus-mt-en-esREMOVED_SECRET
+    "en→zh": "Helsinki-NLP/opus-mt-en-zh",
+    "zh→en": "Helsinki-NLP/opus-mt-zh-en",
+    "en→it": "Helsinki-NLP/opus-mt-en-it",
+    "it→en": "Helsinki-NLP/opus-mt-mul-en",
+    "en→fr": "Helsinki-NLP/opus-mt-en-fr",
+    "es→en": "Helsinki-NLP/opus-mt-es-en",
+    "en→es": "Helsinki-NLP/opus-mt-en-es"
 }
 
 # Load translation pipelines
 translation_pipelines = {}
 for key, model_name in models.items():
-    print(fREMOVED_SECRET🔄 Loading model: {key}REMOVED_SECRET)
+    print(f"🔄 Loading model: {key}")
     tokenizer = MarianTokenizer.from_pretrained(model_name)
     model = MarianMTModel.from_pretrained(model_name)
     translation_pipelines[key] = (tokenizer, model)
@@ -29,7 +29,7 @@ for key, model_name in models.items():
 # Translation function
 def translate(text, direction):
     tokenizer, model = translation_pipelines[direction]
-    inputs = tokenizer(text, return_tensors=REMOVED_SECRETptREMOVED_SECRET, padding=True)
+    inputs = tokenizer(text, return_tensors="pt", padding=True)
     outputs = model.generate(**inputs)
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
@@ -39,52 +39,52 @@ def search_dataset(df, column, query):
 
 # Main search loop
 while True:
-    user_input = input(REMOVED_SECRET\nEnter your product search query (or type 'exit' to quit): REMOVED_SECRET)
-    if user_input.lower() in [REMOVED_SECRETexitREMOVED_SECRET, REMOVED_SECRETquitREMOVED_SECRET]:
-        print(REMOVED_SECRET👋 Exiting search. Goodbye!REMOVED_SECRET)
+    user_input = input("\nEnter your product search query (or type 'exit' to quit): ")
+    if user_input.lower() in ["exit", "quit"]:
+        print("👋 Exiting search. Goodbye!")
         break
 
     detected_lang = detect(user_input)
-    print(fREMOVED_SECRET🔍 Detected language: {detected_lang}REMOVED_SECRET)
+    print(f"🔍 Detected language: {detected_lang}")
 
-    supported_langs = [REMOVED_SECRETzhREMOVED_SECRET, REMOVED_SECRETitREMOVED_SECRET, REMOVED_SECRETesREMOVED_SECRET, REMOVED_SECRETfrREMOVED_SECRET]
+    supported_langs = ["zh", "it", "es", "fr"]
     if detected_lang not in supported_langs:
-        print(fREMOVED_SECRET⚠️ Detected unsupported language '{detected_lang}', defaulting to English.REMOVED_SECRET)
-        detected_lang = REMOVED_SECRETenREMOVED_SECRET
+        print(f"⚠️ Detected unsupported language '{detected_lang}', defaulting to English.")
+        detected_lang = "en"
 
-    if detected_lang == REMOVED_SECRETzhREMOVED_SECRET:
-        search_query_en = translate(user_input, REMOVED_SECRETzh→enREMOVED_SECRET)
-    elif detected_lang == REMOVED_SECRETitREMOVED_SECRET:
-        search_query_en = translate(user_input, REMOVED_SECRETit→enREMOVED_SECRET)
-    elif detected_lang == REMOVED_SECRETesREMOVED_SECRET:
-        search_query_en = translate(user_input, REMOVED_SECRETes→enREMOVED_SECRET)
+    if detected_lang == "zh":
+        search_query_en = translate(user_input, "zh→en")
+    elif detected_lang == "it":
+        search_query_en = translate(user_input, "it→en")
+    elif detected_lang == "es":
+        search_query_en = translate(user_input, "es→en")
     else:
         search_query_en = user_input
 
-    print(fREMOVED_SECRET🔎 Searching for: {search_query_en}REMOVED_SECRET)
+    print(f"🔎 Searching for: {search_query_en}")
 
     results = []
-    results.append(search_dataset(amazon_df, REMOVED_SECRETtitleREMOVED_SECRET, search_query_en))
-    results.append(search_dataset(shopee_df, REMOVED_SECRETtranslation_outputREMOVED_SECRET, search_query_en))
-    results.append(search_dataset(italian_df, REMOVED_SECRETtitleREMOVED_SECRET, search_query_en))
+    results.append(search_dataset(amazon_df, "title", search_query_en))
+    results.append(search_dataset(shopee_df, "translation_output", search_query_en))
+    results.append(search_dataset(italian_df, "title", search_query_en))
 
     combined = pd.concat(results)
     if combined.empty:
-        print(REMOVED_SECRET❌ No matching results found.REMOVED_SECRET)
+        print("❌ No matching results found.")
         continue
 
-    print(REMOVED_SECRET✅ Search Results:REMOVED_SECRET)
+    print("✅ Search Results:")
     print(combined.head())
 
-    if detected_lang != REMOVED_SECRETenREMOVED_SECRET:
+    if detected_lang != "en":
         def get_display_title(row):
-            return row[REMOVED_SECRETtitleREMOVED_SECRET] if REMOVED_SECRETtitleREMOVED_SECRET in row and pd.notna(row[REMOVED_SECRETtitleREMOVED_SECRET]) else row.get(REMOVED_SECRETtranslation_outputREMOVED_SECRET, REMOVED_SECRETREMOVED_SECRET)
+            return row["title"] if "title" in row and pd.notna(row["title"]) else row.get("translation_output", "")
 
         display_titles = [get_display_title(row) for _, row in combined.head().iterrows()]
-        translated_titles = [translate(title, fREMOVED_SECRETen→{detected_lang}REMOVED_SECRET) for title in display_titles]
+        translated_titles = [translate(title, f"en→{detected_lang}") for title in display_titles]
 
-        print(REMOVED_SECRET\n🌍 Translated Results:REMOVED_SECRET)
+        print("\n🌍 Translated Results:")
         for original, translated in zip(display_titles, translated_titles):
-            print(fREMOVED_SECRET- {original} → {translated}REMOVED_SECRET)
+            print(f"- {original} → {translated}")
     else:
-        print(REMOVED_SECRET\n🌍 All results already in English.REMOVED_SECRET)
+        print("\n🌍 All results already in English.")
