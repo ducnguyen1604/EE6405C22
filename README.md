@@ -16,13 +16,14 @@ Repo for NLP EE6405 group C22
 
 ```bash
 cd frontend
+npm install
 npm run dev
 ```
 
 The UI is hosted at: [http://localhost:3000](http://localhost:3000)
 
 Notes: 
-- The backend might take a while to run, so do not try to press REMOVED_SECRETSearchREMOVED_SECRET button continuosly.
+- The backend might take a while to run, so do not try to press "Search" button continuosly.
 - To perform search for another product effectively, user should go back to the main page (by clicking the E-Shop icon at the top left), enter the query and select the language.
 -  Images are used as a placehoders. Some products do not have images.
 
@@ -54,8 +55,8 @@ The backend is hosted at: [http://localhost:8000](http://localhost:8000)
 ### 1. GET `/search`
 
 #### Query Parameters:
-- `q` (string): Search query (e.g., `REMOVED_SECRETmouth sprayREMOVED_SECRET`)
-- `langs` (string, optional): Comma-separated list of languages, e.g., `REMOVED_SECRETChinese,SpanishREMOVED_SECRET`
+- `q` (string): Search query (e.g., `"mouth spray"`)
+- `langs` (string, optional): Comma-separated list of languages, e.g., `"Chinese,Spanish"`
 
 #### Example:
 
@@ -67,20 +68,20 @@ GET /search?q=mouth spray&langs=Chinese,Spanish,Italian
 
 ```json
 {
-  REMOVED_SECRETtranslationsREMOVED_SECRET: {
-    REMOVED_SECRETChineseREMOVED_SECRET: REMOVED_SECRET口腔喷雾REMOVED_SECRET,
-    REMOVED_SECRETSpanishREMOVED_SECRET: REMOVED_SECRETspray oralREMOVED_SECRET,
-    REMOVED_SECRETItalianREMOVED_SECRET: REMOVED_SECRETspray oraleREMOVED_SECRET
+  "translations": {
+    "Chinese": "口腔喷雾",
+    "Spanish": "spray oral",
+    "Italian": "spray orale"
   },
-  REMOVED_SECRETproductsREMOVED_SECRET: [
+  "products": [
     {
-      REMOVED_SECRETidREMOVED_SECRET: 1,
-      REMOVED_SECRETnameREMOVED_SECRET: {
-        REMOVED_SECRETenREMOVED_SECRET: REMOVED_SECRETMouth SprayREMOVED_SECRET,
-        REMOVED_SECRETzhREMOVED_SECRET: REMOVED_SECRET口腔喷雾REMOVED_SECRET
+      "id": 1,
+      "name": {
+        "en": "Mouth Spray",
+        "zh": "口腔喷雾"
       },
-      REMOVED_SECRETdescriptionREMOVED_SECRET: {
-        REMOVED_SECRETenREMOVED_SECRET: REMOVED_SECRETFreshens breathREMOVED_SECRET
+      "description": {
+        "en": "Freshens breath"
       }
     }
   ]
