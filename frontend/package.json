@@ -1,23 +1,23 @@
 {
-  REMOVED_SECRETnameREMOVED_SECRET: REMOVED_SECRETfrontendREMOVED_SECRET,
-  REMOVED_SECRETversionREMOVED_SECRET: REMOVED_SECRET0.1.0REMOVED_SECRET,
-  REMOVED_SECRETprivateREMOVED_SECRET: true,
-  REMOVED_SECRETscriptsREMOVED_SECRET: {
-    REMOVED_SECRETdevREMOVED_SECRET: REMOVED_SECRETnext devREMOVED_SECRET,
-    REMOVED_SECRETbuildREMOVED_SECRET: REMOVED_SECRETnext buildREMOVED_SECRET,
-    REMOVED_SECRETstartREMOVED_SECRET: REMOVED_SECRETnext startREMOVED_SECRET,
-    REMOVED_SECRETlintREMOVED_SECRET: REMOVED_SECRETnext lintREMOVED_SECRET
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  REMOVED_SECRETdependenciesREMOVED_SECRET: {
-    REMOVED_SECRETreactREMOVED_SECRET: REMOVED_SECRET^19.0.0REMOVED_SECRET,
-    REMOVED_SECRETreact-domREMOVED_SECRET: REMOVED_SECRET^19.0.0REMOVED_SECRET,
-    REMOVED_SECRETnextREMOVED_SECRET: REMOVED_SECRET15.2.4REMOVED_SECRET
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "15.2.4"
   },
-  REMOVED_SECRETdevDependenciesREMOVED_SECRET: {
-    REMOVED_SECRET@tailwindcss/postcssREMOVED_SECRET: REMOVED_SECRET^4REMOVED_SECRET,
-    REMOVED_SECRETtailwindcssREMOVED_SECRET: REMOVED_SECRET^4REMOVED_SECRET,
-    REMOVED_SECRETeslintREMOVED_SECRET: REMOVED_SECRET^9REMOVED_SECRET,
-    REMOVED_SECRETeslint-config-nextREMOVED_SECRET: REMOVED_SECRET15.2.4REMOVED_SECRET,
-    REMOVED_SECRET@eslint/eslintrcREMOVED_SECRET: REMOVED_SECRET^3REMOVED_SECRET
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.4",
+    "@eslint/eslintrc": "^3"
   }
 }

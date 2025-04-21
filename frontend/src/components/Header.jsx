@@ -1,47 +1,47 @@
-REMOVED_SECRETuse clientREMOVED_SECRET;
+"use client";
 
-import { useState, useEffect } from REMOVED_SECRETreactREMOVED_SECRET;
-import { useRouter } from REMOVED_SECRETnext/navigationREMOVED_SECRET;
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [darkMode, setDarkMode] = useState(false);
-  const [language, setLanguage] = useState(REMOVED_SECRETenREMOVED_SECRET);
+  const [language, setLanguage] = useState("en");
   const router = useRouter();
 
   
   useEffect(() => {
-    document.documentElement.setAttribute(REMOVED_SECRETdata-themeREMOVED_SECRET, darkMode ? REMOVED_SECRETdarkREMOVED_SECRET : REMOVED_SECRETlightREMOVED_SECRET);
+    document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
   const handleTitleClick = () => {
-    router.push(REMOVED_SECRET/REMOVED_SECRET);
-    window.scrollTo({ top: 0, behavior: REMOVED_SECRETsmoothREMOVED_SECRET });
+    router.push("/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <header className=REMOVED_SECRETfixed top-0 left-0 w-full z-50 bg-gray-100/30 dark:bg-gray-800/30 backdrop-blur-md h-16 flex justify-between items-center p-4REMOVED_SECRET>
+    <header className="fixed top-0 left-0 w-full z-50 bg-gray-100/30 dark:bg-gray-800/30 backdrop-blur-md h-16 flex justify-between items-center p-4">
       <h1
-        className=REMOVED_SECRETtext-xl font-bold text-gray-900 dark:text-gray-100 cursor-pointerREMOVED_SECRET
+        className="text-xl font-bold text-gray-900 dark:text-gray-100 cursor-pointer"
         onClick={handleTitleClick}
       >
         My E-Shop
       </h1>
-      <div className=REMOVED_SECRETflex gap-4 items-centerREMOVED_SECRET>
+      <div className="flex gap-4 items-center">
         <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className=REMOVED_SECRETp-2 rounded borderREMOVED_SECRET
+          className="p-2 rounded border"
         >
-          <option value=REMOVED_SECRETenREMOVED_SECRET>English</option>
-          <option value=REMOVED_SECRETspREMOVED_SECRET>Spainish</option>
-          <option value=REMOVED_SECRETitREMOVED_SECRET>Italian</option>
-          <option value=REMOVED_SECRETzhREMOVED_SECRET>中文</option>
+          <option value="en">English</option>
+          <option value="sp">Spainish</option>
+          <option value="it">Italian</option>
+          <option value="zh">中文</option>
         </select>
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className=REMOVED_SECRETpx-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 active:scale-95 active:bg-pink-700 transition-all duration-150 shadow-md hover:shadow-lgREMOVED_SECRET
+          className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 active:scale-95 active:bg-pink-700 transition-all duration-150 shadow-md hover:shadow-lg"
         >
-          {darkMode ? REMOVED_SECRETLight ModeREMOVED_SECRET : REMOVED_SECRETDark ModeREMOVED_SECRET}
+          {darkMode ? "Light Mode" : "Dark Mode"}
         </button>
       </div>
     </header>

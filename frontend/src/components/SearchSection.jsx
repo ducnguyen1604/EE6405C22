@@ -1,25 +1,25 @@
-REMOVED_SECRETuse clientREMOVED_SECRET;
+"use client";
 
-import { useRouter, usePathname } from REMOVED_SECRETnext/navigationREMOVED_SECRET;
-import { useState, useEffect } from REMOVED_SECRETreactREMOVED_SECRET;
-import SearchBar from REMOVED_SECRET@/components/SearchBarREMOVED_SECRET;
+import { useRouter, usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import SearchBar from "@/components/SearchBar";
 
-const suggestions = [REMOVED_SECRETMouth SprayREMOVED_SECRET, REMOVED_SECRET口腔喷雾REMOVED_SECRET, REMOVED_SECRETaerosol bucalREMOVED_SECRET, REMOVED_SECRETspray oraleREMOVED_SECRET];
+const suggestions = ["Mouth Spray", "口腔喷雾", "aerosol bucal", "spray orale"];
 
 const languages = [
-  { name: REMOVED_SECRETEnglishREMOVED_SECRET, color: REMOVED_SECRET#c026d3REMOVED_SECRET },
-  { name: REMOVED_SECRETChineseREMOVED_SECRET, color: REMOVED_SECRET#ef4444REMOVED_SECRET },
-  { name: REMOVED_SECRETSpanishREMOVED_SECRET, color: REMOVED_SECRET#f59e0bREMOVED_SECRET },
-  { name: REMOVED_SECRETItalianREMOVED_SECRET, color: REMOVED_SECRET#10b981REMOVED_SECRET },
+  { name: "English", color: "#c026d3" },
+  { name: "Chinese", color: "#ef4444" },
+  { name: "Spanish", color: "#f59e0b" },
+  { name: "Italian", color: "#10b981" },
 ];
 
 export default function SearchSection() {
-  const [query, setQuery] = useState(REMOVED_SECRETREMOVED_SECRET);
-  const [displayText, setDisplayText] = useState(REMOVED_SECRETREMOVED_SECRET);
+  const [query, setQuery] = useState("");
+  const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [selectedLangs, setSelectedLangs] = useState([REMOVED_SECRETEnglishREMOVED_SECRET]);
+  const [selectedLangs, setSelectedLangs] = useState(["English"]);
 
   const router = useRouter();
   const path = usePathname();
@@ -65,34 +65,34 @@ export default function SearchSection() {
   };
 
   return (
-    <section className=REMOVED_SECRETmin-h-[calc(100vh-64px)] flex items-center justify-center bg-pink-50 text-center shadow-innerREMOVED_SECRET>
-      <div className=REMOVED_SECRETmax-w-4xl w-full p-6 md:p-12REMOVED_SECRET>
-        {path === REMOVED_SECRET/REMOVED_SECRET && (
-          <div className=REMOVED_SECRETmb-8REMOVED_SECRET>
-            <h2 className=REMOVED_SECRETtext-4xl md:text-6xl font-bold text-pink-700 mb-4REMOVED_SECRET>
+    <section className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-pink-50 text-center shadow-inner">
+      <div className="max-w-4xl w-full p-6 md:p-12">
+        {path === "/" && (
+          <div className="mb-8">
+            <h2 className="text-4xl md:text-6xl font-bold text-pink-700 mb-4">
               🛍️ Welcome to E-shop!
             </h2>
-            <p className=REMOVED_SECRETtext-gray-700 text-lg md:text-2xlREMOVED_SECRET>
+            <p className="text-gray-700 text-lg md:text-2xl">
               Search your favorite products in any language
             </p>
-            <p className=REMOVED_SECRETtext-gray-500 text-md md:text-xl mt-2 italic min-h-[1.5em]REMOVED_SECRET>
-              Try:{REMOVED_SECRET REMOVED_SECRET}
-              <span className=REMOVED_SECRETtext-pink-500 font-semiboldREMOVED_SECRET>
+            <p className="text-gray-500 text-md md:text-xl mt-2 italic min-h-[1.5em]">
+              Try:{" "}
+              <span className="text-pink-500 font-semibold">
                 {displayText}
-                <span className=REMOVED_SECRETblinking-cursorREMOVED_SECRET>|</span>
+                <span className="blinking-cursor">|</span>
               </span>
             </p>
           </div>
         )}
 
         {/* Reusable search bar */}
-        <SearchBar className=REMOVED_SECRETmx-autoREMOVED_SECRET languages={selectedLangs} />
+        <SearchBar className="mx-auto" languages={selectedLangs} />
 
         {/* Language options */}
-        <div className=REMOVED_SECRETmt-6 text-gray-700 text-lg font-mediumREMOVED_SECRET>
+        <div className="mt-6 text-gray-700 text-lg font-medium">
           You also want to search in:
         </div>
-        <div className=REMOVED_SECRETmt-3 flex justify-center flex-wrap gap-3REMOVED_SECRET>
+        <div className="mt-3 flex justify-center flex-wrap gap-3">
           {languages.map((lang) => {
             const isSelected = selectedLangs.includes(lang.name);
             return (
@@ -101,8 +101,8 @@ export default function SearchSection() {
                 onClick={() => toggleLang(lang.name)}
                 className={`px-4 py-2 rounded-full border-2 font-medium transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ${
                   isSelected
-                    ? REMOVED_SECRETtext-white bg-pink-500 border-pink-500REMOVED_SECRET
-                    : REMOVED_SECRETtext-gray-700 bg-whiteREMOVED_SECRET
+                    ? "text-white bg-pink-500 border-pink-500"
+                    : "text-gray-700 bg-white"
                 }`}
                 style={{
                   borderColor: lang.color,
@@ -113,7 +113,7 @@ export default function SearchSection() {
             );
           })}
         </div>
-        <p className=REMOVED_SECRETtext-sm text-gray-500 mt-2 italicREMOVED_SECRET>
+        <p className="text-sm text-gray-500 mt-2 italic">
           At least one language must be selected (default: English)
         </p>
       </div>

@@ -1,4 +1,4 @@
-@import REMOVED_SECRETtailwindcssREMOVED_SECRET;
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -7,7 +7,7 @@
 
 /* I intend to implement dark mode but i am too lazy*/
 /* 
-[data-theme=REMOVED_SECRETdarkREMOVED_SECRET] {
+[data-theme="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
 }

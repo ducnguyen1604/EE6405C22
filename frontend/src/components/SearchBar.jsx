@@ -1,7 +1,7 @@
-import { useRouter } from REMOVED_SECRETnext/navigationREMOVED_SECRET;
-import { useState, useEffect } from REMOVED_SECRETreactREMOVED_SECRET;
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
-export default function SearchBar({ initialValue = REMOVED_SECRETREMOVED_SECRET, languages = [] }) {
+export default function SearchBar({ initialValue = "", languages = [] }) {
   const [query, setQuery] = useState(initialValue);
   const [langs, setLangs] = useState(languages);
   const router = useRouter();
@@ -16,8 +16,8 @@ export default function SearchBar({ initialValue = REMOVED_SECRETREMOVED_SECRET,
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (query.trim() !== REMOVED_SECRETREMOVED_SECRET) {
-      const langParam = langs.length > 0 ? `&langs=${langs.join(REMOVED_SECRET,REMOVED_SECRET)}` : REMOVED_SECRETREMOVED_SECRET;
+    if (query.trim() !== "") {
+      const langParam = langs.length > 0 ? `&langs=${langs.join(",")}` : "";
       router.push(`/search?q=${encodeURIComponent(query)}${langParam}`);
     }
   };
@@ -25,18 +25,18 @@ export default function SearchBar({ initialValue = REMOVED_SECRETREMOVED_SECRET,
   return (
     <form
       onSubmit={handleSearch}
-      className=REMOVED_SECRETflex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4REMOVED_SECRET
+      className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4"
     >
       <input
-        type=REMOVED_SECRETtextREMOVED_SECRET
+        type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder=REMOVED_SECRETSearch for products...REMOVED_SECRET
-        className=REMOVED_SECRETborder border-pink-300 p-4 rounded w-full max-w-xl shadow-md text-lgREMOVED_SECRET
+        placeholder="Search for products..."
+        className="border border-pink-300 p-4 rounded w-full max-w-xl shadow-md text-lg"
       />
       <button
-        type=REMOVED_SECRETsubmitREMOVED_SECRET
-        className=REMOVED_SECRETbg-pink-500 text-white px-6 py-3 rounded hover:bg-pink-600 active:scale-95 active:bg-pink-700 transition-all duration-150 shadow-lg text-lgREMOVED_SECRET
+        type="submit"
+        className="bg-pink-500 text-white px-6 py-3 rounded hover:bg-pink-600 active:scale-95 active:bg-pink-700 transition-all duration-150 shadow-lg text-lg"
       >
         Search
       </button>

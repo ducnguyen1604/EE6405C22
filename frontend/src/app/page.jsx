@@ -1,4 +1,4 @@
-import SearchSection from REMOVED_SECRET@/components/SearchSectionREMOVED_SECRET;
+import SearchSection from "@/components/SearchSection";
 
 export default function HomePage() {
   return <SearchSection />;

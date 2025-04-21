@@ -1,7 +1,7 @@
 {
-  REMOVED_SECRETcompilerOptionsREMOVED_SECRET: {
-    REMOVED_SECRETpathsREMOVED_SECRET: {
-      REMOVED_SECRET@/*REMOVED_SECRET: [REMOVED_SECRET./src/*REMOVED_SECRET]
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
     }
   }
 }

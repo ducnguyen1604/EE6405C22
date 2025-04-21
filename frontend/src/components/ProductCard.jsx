@@ -1,69 +1,69 @@
-REMOVED_SECRETuse clientREMOVED_SECRET;
+"use client";
 
-import Link from REMOVED_SECRETnext/linkREMOVED_SECRET;
+import Link from "next/link";
 
 export default function ProductCard({ product, langs }) {
   const actualProduct = product; // ✅ Handle both flat & nested
-  const langList = langs?.split(REMOVED_SECRET,REMOVED_SECRET).map((l) => l.trim().toLowerCase()) || [];
+  const langList = langs?.split(",").map((l) => l.trim().toLowerCase()) || [];
   // console.log(actualProduct)
   // console.log(langList)
-  let name = actualProduct.name?.en || REMOVED_SECRETUnnamedREMOVED_SECRET;
-  let description = actualProduct.description?.en || REMOVED_SECRETNo descriptionREMOVED_SECRET;
+  let name = actualProduct.name?.en || "Unnamed";
+  let description = actualProduct.description?.en || "No description";
 
   // Prioritize selected languages (in order) if available
   for (const lang of langList) {
-    if (lang === REMOVED_SECRETchineseREMOVED_SECRET && actualProduct.name?.zh) {
+    if (lang === "chinese" && actualProduct.name?.zh) {
       name = actualProduct.name.zh;
       description = actualProduct.description?.zh || description;
       break;
     }
-    if (lang === REMOVED_SECRETspanishREMOVED_SECRET && actualProduct.name?.es) {
+    if (lang === "spanish" && actualProduct.name?.es) {
       name = actualProduct.name.es;
       description = actualProduct.description?.es || description;
       break;
     }
-    if (lang === REMOVED_SECRETitalianREMOVED_SECRET && actualProduct.name?.it) {
+    if (lang === "italian" && actualProduct.name?.it) {
       name = actualProduct.name.it;
       description = actualProduct.description?.it || description;
       break;
     }
   }
 
-  const image = actualProduct.image || REMOVED_SECRET/images/products/default.jpgREMOVED_SECRET;
+  const image = actualProduct.image || "/images/products/default.jpg";
 
   return (
     <Link
       href={`/product/${actualProduct.id}`}
-      className=REMOVED_SECRETborder rounded-xl shadow-sm overflow-hidden bg-white dark:bg-gray-900 hover:shadow-lg hover:scale-[1.04] transition-transform duration-200 w-full max-w-sm flex flex-colREMOVED_SECRET
+      className="border rounded-xl shadow-sm overflow-hidden bg-white dark:bg-gray-900 hover:shadow-lg hover:scale-[1.04] transition-transform duration-200 w-full max-w-sm flex flex-col"
     >
       {/* Image */}
-      <div className=REMOVED_SECRETw-full aspect-[7/6] bg-gray-100 flex items-center justify-centerREMOVED_SECRET>
+      <div className="w-full aspect-[7/6] bg-gray-100 flex items-center justify-center">
         {image ? (
-          <img src={image} alt={name} className=REMOVED_SECRETw-full h-full object-coverREMOVED_SECRET />
+          <img src={image} alt={name} className="w-full h-full object-cover" />
         ) : (
-          <span className=REMOVED_SECRETtext-gray-500 text-smREMOVED_SECRET>Image update soon</span>
+          <span className="text-gray-500 text-sm">Image update soon</span>
         )}
       </div>
 
       {/* Info */}
-      <div className=REMOVED_SECRETp-4 flex flex-col justify-end flex-1 gap-2REMOVED_SECRET>
-        <div className=REMOVED_SECRETflex justify-between items-centerREMOVED_SECRET>
-          <h3 className=REMOVED_SECRETfont-semibold text-lg text-gray-900 dark:text-gray-100REMOVED_SECRET>
+      <div className="p-4 flex flex-col justify-end flex-1 gap-2">
+        <div className="flex justify-between items-center">
+          <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
             {name}
           </h3>
-          <span className=REMOVED_SECRETtext-pink-600 font-boldREMOVED_SECRET>
+          <span className="text-pink-600 font-bold">
             ${actualProduct.price}
           </span>
         </div>
-        <p className=REMOVED_SECRETtext-sm text-gray-500REMOVED_SECRET>{actualProduct.category}</p>
-        <p className=REMOVED_SECRETtext-sm text-gray-700 dark:text-gray-300 line-clamp-2REMOVED_SECRET>
+        <p className="text-sm text-gray-500">{actualProduct.category}</p>
+        <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2">
           {description}
         </p>
-        <div className=REMOVED_SECRETflex justify-between items-center mt-2REMOVED_SECRET>
-          <span className=REMOVED_SECRETtext-yellow-500 text-smREMOVED_SECRET>
+        <div className="flex justify-between items-center mt-2">
+          <span className="text-yellow-500 text-sm">
             ⭐ {actualProduct.rating}
           </span>
-          <span className=REMOVED_SECRETtext-gray-500 text-xsREMOVED_SECRET>
+          <span className="text-gray-500 text-xs">
             {actualProduct.comments?.length || 0} comments
           </span>
         </div>

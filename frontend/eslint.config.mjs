@@ -1,6 +1,6 @@
-import { dirname } from REMOVED_SECRETpathREMOVED_SECRET;
-import { fileURLToPath } from REMOVED_SECRETurlREMOVED_SECRET;
-import { FlatCompat } from REMOVED_SECRET@eslint/eslintrcREMOVED_SECRET;
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -9,6 +9,6 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [...compat.extends(REMOVED_SECRETnext/core-web-vitalsREMOVED_SECRET)];
+const eslintConfig = [...compat.extends("next/core-web-vitals")];
 
 export default eslintConfig;
